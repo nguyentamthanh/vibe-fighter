@@ -7,3 +7,5 @@ dist
 # Capacitor native projects are generated on demand, not committed
 ios/
 android/
+.vercel
+.env*
