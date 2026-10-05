@@ -53,6 +53,104 @@ export function createTextButton(scene: Phaser.Scene, config: TextButtonConfig):
   };
 }
 
+export interface BannerButtonConfig extends TextButtonConfig {
+  /** Font family for the label (the arcade display font on the title screen). */
+  fontFamily: string;
+}
+
+const BANNER_SKEW = 18;
+
+/**
+ * Create a slanted, arcade-style menu button: a dark glass panel that turns
+ * into a glowing orange banner with pulsing arrows while selected.
+ * @param scene - The owning scene.
+ * @param config - Geometry, label, font and callbacks.
+ * @returns A {@link TextButton} handle.
+ */
+export function createBannerButton(scene: Phaser.Scene, config: BannerButtonConfig): TextButton {
+  const { width, height } = config;
+  const panel = scene.add.graphics();
+  const label = scene.add
+    .text(0, 1, config.label.toUpperCase(), {
+      color: '#cbd5e1',
+      fontFamily: config.fontFamily,
+      fontSize: '20px',
+      stroke: '#020617',
+      strokeThickness: 5
+    })
+    .setOrigin(0.5);
+  const arrowStyle = { color: '#fde047', fontFamily: config.fontFamily, fontSize: '18px', stroke: '#7c2d12', strokeThickness: 5 };
+  const leftArrow = scene.add.text(-width / 2 + 34, 1, '▶', arrowStyle).setOrigin(0.5);
+  const rightArrow = scene.add.text(width / 2 - 34, 1, '◀', arrowStyle).setOrigin(0.5);
+  const hitArea = scene.add.rectangle(0, 0, width, height, 0x000000, 0.001);
+
+  const group = scene.add.container(config.x, config.y, [panel, label, leftArrow, rightArrow, hitArea]);
+  let arrowTweens: Phaser.Tweens.Tween[] = [];
+
+  const outline = (inset: number): Phaser.Math.Vector2[] => [
+    new Phaser.Math.Vector2(-width / 2 + BANNER_SKEW + inset, -height / 2 + inset),
+    new Phaser.Math.Vector2(width / 2 - inset, -height / 2 + inset),
+    new Phaser.Math.Vector2(width / 2 - BANNER_SKEW - inset, height / 2 - inset),
+    new Phaser.Math.Vector2(-width / 2 + inset, height / 2 - inset)
+  ];
+
+  const draw = (selected: boolean): void => {
+    panel.clear();
+
+    if (selected) {
+      // Soft outer glow, then the hot orange-to-red banner with a gold rim and a light band on top.
+      panel.fillStyle(0xf97316, 0.25);
+      panel.fillPoints(outline(-6), true);
+      panel.fillGradientStyle(0xfb923c, 0xf97316, 0xdc2626, 0xb91c1c, 1, 1, 1, 1);
+      panel.fillPoints(outline(0), true);
+      panel.fillStyle(0xffffff, 0.18);
+      panel.fillRect(-width / 2 + BANNER_SKEW + 6, -height / 2 + 5, width - BANNER_SKEW * 2 - 6, 6);
+      panel.lineStyle(3, 0xfde047, 1);
+      panel.strokePoints(outline(0), true);
+    } else {
+      panel.fillStyle(0x0b1120, 0.82);
+      panel.fillPoints(outline(0), true);
+      panel.lineStyle(2, 0x64748b, 0.9);
+      panel.strokePoints(outline(0), true);
+    }
+  };
+
+  const setSelected = (selected: boolean): void => {
+    draw(selected);
+    label.setColor(selected ? '#ffffff' : '#cbd5e1');
+    leftArrow.setVisible(selected);
+    rightArrow.setVisible(selected);
+    arrowTweens.forEach((tween) => tween.stop());
+    arrowTweens = [];
+    leftArrow.x = -width / 2 + 34;
+    rightArrow.x = width / 2 - 34;
+    scene.tweens.add({ targets: group, scale: selected ? 1.06 : 1, duration: 140, ease: 'Back.easeOut' });
+
+    if (selected) {
+      const nudge = { duration: 420, ease: 'Sine.easeInOut', yoyo: true, repeat: -1 };
+      arrowTweens = [
+        scene.tweens.add({ targets: leftArrow, x: leftArrow.x + 8, ...nudge }),
+        scene.tweens.add({ targets: rightArrow, x: rightArrow.x - 8, ...nudge })
+      ];
+    }
+  };
+
+  hitArea.setInteractive({ useHandCursor: true });
+  hitArea.on('pointerover', () => config.onHover?.());
+  hitArea.on('pointerdown', () => config.onClick());
+
+  setSelected(false);
+
+  return {
+    group,
+    setSelected,
+    destroy: () => {
+      arrowTweens.forEach((tween) => tween.stop());
+      group.destroy(true);
+    }
+  };
+}
+
 export interface SelectionCard {
   container: Phaser.GameObjects.Container;
   setSelected(selected: boolean, accent?: number): void;

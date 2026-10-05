@@ -5,6 +5,7 @@ import { JIUJITSU_FIGHTER_CHARACTER_ID } from './jiujitsuFighter';
 import { VIKING_BERSERKER_CHARACTER_ID } from './vikingBerserker';
 import { KUNOICHI_CHARACTER_ID } from './kunoichi';
 import { MUAY_THAI_CHARACTER_ID } from './muayThai';
+import { SHAOLIN_MONK_CHARACTER_ID } from './shaolinMonk';
 import type {
   AttackKind,
   AttackProfile,
@@ -42,7 +43,9 @@ const FIGHTER_STAT_OVERRIDES: Record<string, Partial<FighterStats>> = {
   // Light and fast: quickest walk and highest jump.
   [KUNOICHI_CHARACTER_ID]: { walkSpeed: 270, airDrift: 230, jump: 1080 },
   // Pressure fighter: steps in quickly, short reach.
-  [MUAY_THAI_CHARACTER_ID]: { walkSpeed: 250, jump: 1000 }
+  [MUAY_THAI_CHARACTER_ID]: { walkSpeed: 250, jump: 1000 },
+  // Agile: high, floaty jump.
+  [SHAOLIN_MONK_CHARACTER_ID]: { airDrift: 210, jump: 1060 }
 };
 
 /**
@@ -121,6 +124,11 @@ const FIGHTER_COMBAT_OVERRIDES: Record<string, Partial<FighterCombat>> = {
     lowDamage: 13,
     lowKnockback: 360,
     specialDamage: 8
+  },
+  // Balanced, with a strong three-hit fire-palm special.
+  [SHAOLIN_MONK_CHARACTER_ID]: {
+    specialDamage: 8,
+    specialKnockback: 180
   }
 };
 

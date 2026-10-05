@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 
 import { AUDIO_KEYS, playAudioCue } from '../game/core/audio';
+import { createMenuBackdrop } from '../game/menuBackdrop';
 import { createSelectionCard, type SelectionCard } from '../game/ui';
 import { SCENE_KEYS, type MatchMode } from '../game/types';
 import { BaseScene } from './BaseScene';
@@ -37,6 +38,7 @@ export class ModeSelectScene extends BaseScene {
 
     this.markActiveScene(SCENE_KEYS.ModeSelect);
     this.cameras.main.setBackgroundColor(0x020617);
+    createMenuBackdrop(this, { dim: 0.72 });
     this.createHeading('Select Mode', 'How do you want to play?');
 
     this.buildCards();

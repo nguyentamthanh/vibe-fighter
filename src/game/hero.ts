@@ -6,6 +6,7 @@ import { JIUJITSU_FIGHTER_CHARACTER } from './jiujitsuFighter';
 import { VIKING_BERSERKER_CHARACTER } from './vikingBerserker';
 import { KUNOICHI_CHARACTER } from './kunoichi';
 import { MUAY_THAI_CHARACTER } from './muayThai';
+import { SHAOLIN_MONK_CHARACTER } from './shaolinMonk';
 
 export interface HeroBoundsFrame {
   frame: number;
@@ -52,7 +53,8 @@ export const CHARACTER_DEFINITIONS: CharacterDefinition[] = [
   JIUJITSU_FIGHTER_CHARACTER,
   VIKING_BERSERKER_CHARACTER,
   KUNOICHI_CHARACTER,
-  MUAY_THAI_CHARACTER
+  MUAY_THAI_CHARACTER,
+  SHAOLIN_MONK_CHARACTER
 ];
 
 /**

@@ -15,6 +15,3 @@ concepts/**/raw/
 concepts/**/work/
 concepts/**/idle-frames/
 __pycache__/
-
-# Fighters still in production (not registered in the game yet)
-public/assets/shaolin-monk/

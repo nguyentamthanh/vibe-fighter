@@ -1,7 +1,8 @@
 import * as Phaser from 'phaser';
 
 import { AUDIO_KEYS, playAudioCue } from '../game/core/audio';
-import { FIGHTER_CHARACTER_DEFINITIONS } from '../game/hero';
+import { createMenuBackdrop } from '../game/menuBackdrop';
+import { SELECTABLE_ROSTER } from '../game/roster';
 import { createSelectionCard, type SelectionCard } from '../game/ui';
 import { SCENE_KEYS, type MatchMode } from '../game/types';
 import { BaseScene } from './BaseScene';
@@ -20,20 +21,6 @@ const CARD_MARGIN = 40;
 // Vertical band for the cards: below the heading, above the footer hint.
 const CARD_AREA_TOP = 150;
 const CARD_AREA_BOTTOM = 70;
-
-const SELECTABLE_FIGHTER_IDS = [
-  'red-brawler',
-  'jiujitsu-fighter',
-  'green-boxer',
-  'viking-berserker',
-  'kunoichi',
-  'muay-thai',
-  'shaolin-monk',
-  'hac-long'
-];
-const SELECTABLE_ROSTER = FIGHTER_CHARACTER_DEFINITIONS.filter((character) =>
-  SELECTABLE_FIGHTER_IDS.includes(character.id)
-);
 
 interface PlayerCursor {
   index: number;
@@ -75,6 +62,7 @@ export class CharacterSelectScene extends BaseScene {
 
     this.markActiveScene(SCENE_KEYS.CharacterSelect);
     this.cameras.main.setBackgroundColor(0x020617);
+    createMenuBackdrop(this, { dim: 0.72 });
     this.createHeading(
       'Select Fighter',
       this.mode === '1v1' ? 'P1 = WASD + Space   •   P2 = Arrows + Enter' : 'WASD / Arrows to choose • Enter to confirm'

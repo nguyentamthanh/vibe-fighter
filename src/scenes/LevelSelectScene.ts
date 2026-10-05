@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 
 import { AUDIO_KEYS, playAudioCue } from '../game/core/audio';
+import { createMenuBackdrop } from '../game/menuBackdrop';
 import { STAGE_DEFINITIONS } from '../game/stageConfig';
 import { createSelectionCard, type SelectionCard } from '../game/ui';
 import { SCENE_KEYS, type MatchMode } from '../game/types';
@@ -35,6 +36,7 @@ export class LevelSelectScene extends BaseScene {
 
     this.markActiveScene(SCENE_KEYS.LevelSelect);
     this.cameras.main.setBackgroundColor(0x020617);
+    createMenuBackdrop(this, { dim: 0.72 });
     this.createHeading('Select Stage', this.mode === '1v1' ? '1 vs 1' : '1 vs CPU');
 
     this.buildCards();
