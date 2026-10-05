@@ -1,0 +1,6 @@
+ATTACH the reference image: concepts/characters/2026-10-04-kunoichi/kunoichi-ref.png
+SAVE the result as: concepts/characters/2026-10-04-kunoichi/raw/portrait.png
+square portrait
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same character: a slim, agile female ninja (kunoichi): long black high ponytail, dark purple sleeveless short ninja jacket over a mesh undershirt, a long flowing red scarf, black cloth wraps on the forearms and shins, dark fitted trousers, split-toe tabi boots, a dark grey cloth mask covering her nose and mouth, a short steel kunai held reverse-grip in each hand), draw a square character-select portrait in the same pixel-art style: chest-up close-up, the face large with a calm, sharp, focused expression, the head turned three-quarters toward the left, one kunai raised beside the face in a reverse grip, the red scarf and ponytail flowing behind, dramatic rim lighting. Solid dark crimson-purple background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame.

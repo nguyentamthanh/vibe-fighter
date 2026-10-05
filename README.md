@@ -50,6 +50,11 @@ npm test
 Two players share one keyboard (P1 + P2). The on-screen prompt shows the move
 and attack keys for each player at the start of a match.
 
+- `http://localhost:5173/` — the game, full screen, straight to the main menu.
+- `http://localhost:5173/dashboard` — the settings dashboard (debug console, gyms,
+  fighter playground tuning; dev server only). Saved configs are picked up by the
+  game page on reload.
+
 ## What's inside
 
 - **Full game flow** — splash → menu → 1v1 / 1vCPU → stage → character select →

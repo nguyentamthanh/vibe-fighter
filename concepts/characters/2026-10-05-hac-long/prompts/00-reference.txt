@@ -1,0 +1,6 @@
+NO attachment - this prompt creates the reference itself.
+SAVE the result as: concepts/characters/2026-10-05-hac-long/hac-long-ref.png
+Check it before generating any action: every other prompt copies this design.
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Create a clean full-body reference image for an original SNES-era pixel-art fighting-game sprite character: a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards. Isolated full-body, 3/4 side view facing LEFT in a ready fighting stance, centred with generous padding, plain white background, no stage, no HUD, no opponent. Original character only, no logos, no text, no watermark.

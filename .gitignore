@@ -9,3 +9,12 @@ ios/
 android/
 .vercel
 .env*
+
+# Sprite pipeline: raw generated sheets and intermediate frames are large and reproducible locally
+concepts/**/raw/
+concepts/**/work/
+concepts/**/idle-frames/
+__pycache__/
+
+# Fighters still in production (not registered in the game yet)
+public/assets/shaolin-monk/

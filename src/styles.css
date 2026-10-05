@@ -129,6 +129,11 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+}
+
+a.shell-button {
+  text-decoration: none;
 }
 
 .app-shell__status {

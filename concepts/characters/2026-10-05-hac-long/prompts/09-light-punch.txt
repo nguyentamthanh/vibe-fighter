@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-05-hac-long/hac-long-ref.png
+SAVE the result as: concepts/characters/2026-10-05-hac-long/raw/light-punch.png
+6 frames, 3x2 grid, 14 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards), draw a sprite sheet of the "Dragon Claw" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. A fast clawed-hand swipe toward the LEFT at face height. The strike frames are 3 and 4.
+Frame 1: guard stance.
+Frame 2: wind-up, shoulders twisting.
+Frame 3: strike: the dragon claw raking forward to the LEFT at face height.
+Frame 4: full extension: the dragon claw raking forward to the LEFT at face height, a short white impact streak.
+Frame 5: pulling back.
+Frame 6: recovery to the guard stance.
+Draw the character small inside its cell: including the hair or sash, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, hair or sash may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

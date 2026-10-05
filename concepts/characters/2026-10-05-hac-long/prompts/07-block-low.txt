@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-05-hac-long/hac-long-ref.png
+SAVE the result as: concepts/characters/2026-10-05-hac-long/raw/block-low.png
+6 frames, 3x2 grid, 10 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards), draw a sprite sheet of the "Block Low" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. Feet stay on the ground line. Goes from standing to a LOW crouching block held from frame 3 onward.
+Frame 1: guard stance, starting to crouch.
+Frame 2: crouching low, forearms lowering in front of the knees.
+Frame 3: block held: deep low crouch, forearms guarding the shins, body only about 60 percent as tall as in frame 1.
+Frame 4: same low crouching block.
+Frame 5: same low crouching block.
+Frame 6: same low crouching block.
+Draw the character small inside its cell: including the hair or sash, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, hair or sash may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

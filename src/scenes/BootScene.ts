@@ -22,6 +22,7 @@ export class BootScene extends BaseScene {
     registerQuestUiAtlasFrames(this);
     registerFightingUiAtlasFrames(this);
     registerStarterAnimations(this);
-    this.scene.start(SCENE_KEYS.Splash);
+    // The game page goes straight to the menu; the dashboard keeps the "press any key" splash.
+    this.scene.start(this.app.isDebugShell ? SCENE_KEYS.Splash : SCENE_KEYS.MainMenu);
   }
 }

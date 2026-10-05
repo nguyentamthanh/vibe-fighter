@@ -1,0 +1,10 @@
+Tool: Gemini (gemini.google.com, model "Flash")
+Date: 2026-09-17
+
+Prompt used:
+Create a clean full-body reference image for an original SNES-era pixel-art
+fighting-game character: an athletic young street brawler, spiky brown hair,
+red cropped jacket over a light shirt, dark pants, red sneakers, fingerless
+gloves, confident martial-arts stance. Isolated full-body, 3/4 side-facing
+fighting stance, centered with generous padding, plain white background, no
+stage, no HUD, no opponent. Original character only, no logos, no text.

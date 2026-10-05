@@ -1,0 +1,16 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/special.png
+9 frames, 3x3 grid, 16 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a sprite sheet of the "Storm Whirlwind" animation for a 2D fighting game: 9 frames in a 3x3 grid (3 columns, 3 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. A three-hit spinning axe combo toward the RIGHT (the way he faces). The strike frames are 3, 5 and 7; frames 4, 6 and 8 are transition frames between hits. Lightning trails follow the axe.
+Frame 1: wind-up: deep crouch, the axe pulled far back behind the body, intense sparks on the blades.
+Frame 2: lunging forward to the right, body turning, the axe starting to swing.
+Frame 3: first hit: a wide horizontal sweep, the axe fully extended forward at chest height, a bright lightning arc trailing behind it.
+Frame 4: transition: body rotating, the axe pulled back across the body, crouched, sparks trailing.
+Frame 5: second hit: a reverse spinning sweep, the axe fully extended forward at chest height, torso twisted, lightning arc trailing.
+Frame 6: transition: rising up, the axe lifted high overhead in both hands, body stretched tall.
+Frame 7: third hit, the finisher: a huge overhead slam, the axe blade driving down in front of the body, a large lightning burst at the impact point.
+Frame 8: follow-through: the axe buried low at the ground in front, body bowed, sparks fading.
+Frame 9: recovery: standing back up, pulling the axe back to the guard stance.
+Draw the character small inside its cell: including the axe or sparks, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, axe or sparks may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

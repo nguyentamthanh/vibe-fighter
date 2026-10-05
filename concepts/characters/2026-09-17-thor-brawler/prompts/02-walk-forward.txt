@@ -1,0 +1,15 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/walk-forward.png
+8 frames, 4x2 grid, 8 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a sprite sheet of the "Walk Forward" animation for a 2D fighting game: 8 frames in a 4x2 grid (4 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. A heavy, stomping walk cycle moving toward the LEFT. The character stays centred in its cell (walking in place); only the legs, torso bob and axe move. The axe stays held across the body in both hands.
+Frame 1: contact: the left (front) foot heel planted far ahead, the right (back) foot toe still on the ground behind, torso upright.
+Frame 2: down: weight sinks onto the front foot, knees bend, torso dips about 3 pixels, the back foot lifts off the ground.
+Frame 3: passing: the back leg swings forward past the planted leg, body at mid height, axe head bobs up slightly.
+Frame 4: up: body at its highest point, the swinging leg reaching forward, weight rising over the planted leg.
+Frame 5: contact, opposite leg: the other foot heel planted far ahead, the first foot toe on the ground behind (mirror of frame 1).
+Frame 6: down, opposite leg: weight sinks onto the new front foot, torso dips about 3 pixels (mirror of frame 2).
+Frame 7: passing, opposite leg: the back leg swings forward past the planted leg, axe head bobs up (mirror of frame 3).
+Frame 8: up, opposite leg: body at its highest point, leading smoothly back into frame 1 (mirror of frame 4).
+Draw the character small inside its cell: including the axe or sparks, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, axe or sparks may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

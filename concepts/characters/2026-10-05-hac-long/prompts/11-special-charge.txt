@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-05-hac-long/hac-long-ref.png
+SAVE the result as: concepts/characters/2026-10-05-hac-long/raw/special-charge.png
+6 frames, 3x2 grid, 14 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards), draw a sprite sheet of the "Dragon Awakens" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. Powering up in place; feet stay planted. Black smoke swirls around him in the shape of a coiling dragon, with a gold glow on his fists (black and gold only).
+Frame 1: guard stance.
+Frame 2: focusing, a faint aura appearing.
+Frame 3: aura growing stronger.
+Frame 4: aura strong, muscles tense.
+Frame 5: peak power, aura blazing.
+Frame 6: same as frame 5, aura flickering.
+Draw the character small inside its cell: including the hair or sash, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, hair or sash may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

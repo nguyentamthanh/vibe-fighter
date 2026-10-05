@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-04-kunoichi/kunoichi-ref.png
+SAVE the result as: concepts/characters/2026-10-04-kunoichi/raw/hit-high.png
+6 frames, 3x2 grid, 12 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a slim, agile female ninja (kunoichi): long black high ponytail, dark purple sleeveless short ninja jacket over a mesh undershirt, a long flowing red scarf, black cloth wraps on the forearms and shins, dark fitted trousers, split-toe tabi boots, a dark grey cloth mask covering her nose and mouth, a short steel kunai held reverse-grip in each hand), draw a sprite sheet of the "Hit High" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. Being struck in the face from the LEFT: the reaction pushes her back to the RIGHT. Feet stay near the ground line.
+Frame 1: impact: head snaps back, eyes shut, torso jerks back, arms flung out.
+Frame 2: maximum recoil: torso bent well back, one foot sliding, scarf whipping forward.
+Frame 3: recovering: leaning back less, grimacing, weight returning forward.
+Frame 4: almost recovered: back near the ready stance with a pained face.
+Frame 5: almost recovered: back near the ready stance with a pained face (held).
+Frame 6: almost recovered: back near the ready stance with a pained face (held).
+Draw the character small inside its cell: including the kunai, scarf or ponytail, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, kunai, scarf or ponytail may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

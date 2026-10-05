@@ -114,10 +114,13 @@ const EDITABLE_LEVEL_IDS = ['editor-playground'] as const;
 export function createApp(root: HTMLElement): void {
   const searchParams = new URLSearchParams(window.location.search);
   const shellMode = searchParams.get('shell');
-  const isGameShellForced = shellMode === 'game';
   const isMobileShell = shellMode === 'mobile';
   const isLocalDevHost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-  const isDebugShell = !isGameShellForced && !isMobileShell && import.meta.env.DEV && isLocalDevHost;
+  // The page is the game by default (full screen, straight to the menu). The settings
+  // dashboard (debug console, gyms, playground tuning) lives at /dashboard and only
+  // exists on the local dev server; ?shell=debug is kept as an alias.
+  const isDashboardRoute = window.location.pathname.replace(/\/+$/, '') === '/dashboard' || shellMode === 'debug';
+  const isDebugShell = isDashboardRoute && !isMobileShell && import.meta.env.DEV && isLocalDevHost;
 
   root.innerHTML = `
     <div class="app-shell${isDebugShell ? '' : ' app-shell--game-only'}" data-profile="landscape">
@@ -130,6 +133,7 @@ export function createApp(root: HTMLElement): void {
           </div>
           <div class="app-shell__header-action">
             <button id="play-toggle" class="shell-button" data-variant="primary" type="button">Play</button>
+            <a class="shell-button" href="/" target="_blank" rel="noopener">Open game ↗</a>
           </div>
           <div class="app-shell__status">
             <button id="profile-toggle" class="status-chip" type="button" title="Toggle layout">Landscape</button>

@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-05-hac-long/hac-long-ref.png
+SAVE the result as: concepts/characters/2026-10-05-hac-long/raw/walk-forward.png
+6 frames, 3x2 grid, 8 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards), draw a sprite sheet of the "Walk Forward" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. A guarded step toward the LEFT. The character stays centred in its cell (walking in place).
+Frame 1: contact: front (left) foot stepping forward, guard up.
+Frame 2: down: weight shifts, knees bend, body dips slightly.
+Frame 3: passing: the free leg moves past the planted leg.
+Frame 4: contact, opposite leg (mirror of frame 1).
+Frame 5: down, opposite leg (mirror of frame 2).
+Frame 6: passing, opposite leg, leading smoothly into frame 1.
+Draw the character small inside its cell: including the hair or sash, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, hair or sash may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

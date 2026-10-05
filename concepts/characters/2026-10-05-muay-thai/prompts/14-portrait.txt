@@ -1,0 +1,6 @@
+ATTACH the reference image: concepts/characters/2026-10-05-muay-thai/muay-thai-ref.png
+SAVE the result as: concepts/characters/2026-10-05-muay-thai/raw/portrait.png
+square portrait
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Now something different: NOT a sprite sheet. Draw ONE single square character-select portrait (one image, no grid, no frames) of the same character (a lean, muscular Thai boxer: short black hair, a red-and-white mongkol headband with short tails, red prajied arm bands on both biceps, white hand wraps, shirtless with a tanned toned torso, satin blue Muay Thai shorts with gold trim, bare feet with white ankle wraps), in the same pixel-art style but more detailed: chest-up close-up, the face large with a fierce, focused stare, both wrapped fists raised in a high Muay Thai guard, the head turned three-quarters toward the right, dramatic rim lighting. Solid dark blue background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame.

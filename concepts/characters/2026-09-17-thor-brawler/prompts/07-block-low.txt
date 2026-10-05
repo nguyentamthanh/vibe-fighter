@@ -1,0 +1,11 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/block-low.png
+4 frames, 2x2 grid, 10 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a sprite sheet of the "Block Low" animation for a 2D fighting game: 4 frames in a 2x2 grid (2 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. Feet stay on the same ground line; the body is crouched. The blocking pose is held from frame 3 onward.
+Frame 1: guard stance, starting to crouch and lower the axe.
+Frame 2: crouching, knees bending, axe head lowering in front of the legs.
+Frame 3: block held: low crouch, axe held vertically in front of the shins with the blade down, torso leaning forward behind it.
+Frame 4: block held, identical to frame 3 with a very slight extra brace.
+Draw the character small inside its cell: including the axe or sparks, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, axe or sparks may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

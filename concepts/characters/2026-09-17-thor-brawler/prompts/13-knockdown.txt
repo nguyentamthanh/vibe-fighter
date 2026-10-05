@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/knockdown.png
+6 frames, 3x2 grid, 10 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a sprite sheet of the "Knockdown" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. The character is hit from the RIGHT (the side he faces) and falls backward to the LEFT, ending lying on his back with his head to the left and his feet to the right. The final frames are a held lying pose. The lying body must still fit inside its cell.
+Frame 1: hit reaction: head snaps back, torso jerks back, axe swinging loosely in one hand.
+Frame 2: airborne: leaning back at about 45 degrees, both feet off the ground, arms flung wide, axe dropping.
+Frame 3: falling: body nearly horizontal in the air, legs kicked up, axe tumbling beside him.
+Frame 4: hitting the ground on his back, impact, body slightly bent, dust puff.
+Frame 5: lying flat on his back, limp, head to the left, feet to the right, the axe on the ground beside him.
+Frame 6: lying flat, identical to frame 5 (held pose).
+Draw the character small inside its cell: including the axe or sparks, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, axe or sparks may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

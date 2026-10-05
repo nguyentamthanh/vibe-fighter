@@ -1,0 +1,6 @@
+NO attachment - this prompt creates the reference itself.
+SAVE the result as: concepts/characters/2026-10-04-kunoichi/kunoichi-ref.png
+Check it before generating any action: every other prompt copies this design.
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Create a clean full-body reference image for an original SNES-era pixel-art fighting-game sprite character: a slim, agile female ninja (kunoichi): long black high ponytail, dark purple sleeveless short ninja jacket over a mesh undershirt, a long flowing red scarf, black cloth wraps on the forearms and shins, dark fitted trousers, split-toe tabi boots, a half face mask pulled down around the neck, a short steel kunai held reverse-grip in each hand. Isolated full-body, 3/4 side view facing LEFT in a ready fighting stance, centred with generous padding, plain white background, no stage, no HUD, no opponent. Original character only, no logos, no text, no watermark.

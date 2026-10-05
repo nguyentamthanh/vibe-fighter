@@ -50,6 +50,12 @@ export interface FighterCharacterConfig {
   anchorUsage: string;
   anchorFile?: string;
   portraitFile?: string;
+  /**
+   * Sprite frame width in px (default 256). Wider frames give long weapons room
+   * in front of the body; the feet stay centred (anchor x 0.5) and frame height
+   * stays 256.
+   */
+  frameWidth?: number;
   actions: FighterActionSpec[];
 }
 
@@ -77,8 +83,10 @@ export function buildFighterCharacter(config: FighterCharacterConfig): Character
     usage: `${config.label.toLowerCase()} character-select portrait`
   };
 
+  const frameWidth = config.frameWidth ?? FRAME_WIDTH;
+
   const spritesheets: SpritesheetAsset[] = config.actions.map((spec) =>
-    sheet(animationKey(config.id, spec.action), `${config.assetRoot}/${spec.file}`, spec.frames)
+    sheet(animationKey(config.id, spec.action), `${config.assetRoot}/${spec.file}`, spec.frames, frameWidth)
   );
 
   const animations: HeroAnimationDefinition[] = config.actions.map((spec) =>
@@ -90,7 +98,7 @@ export function buildFighterCharacter(config: FighterCharacterConfig): Character
     label: config.label,
     role: config.role ?? 'player',
     anchor: WEST_ANCHOR,
-    anchorPixels: WEST_ANCHOR_PIXELS,
+    anchorPixels: { ...WEST_ANCHOR_PIXELS, x: frameWidth / 2 },
     animations,
     anchorAsset,
     portrait,
@@ -119,13 +127,14 @@ export function rect(x: number, y: number, width: number, height: number): Rect 
 }
 
 /**
- * Build a spritesheet asset descriptor with the shared 256x256 frame layout.
+ * Build a spritesheet asset descriptor (256px tall frames, 256px wide by default).
  * @param key - Loader/animation key.
  * @param url - Public URL of the spritesheet.
  * @param frames - Frame count in the sheet.
+ * @param frameWidth - Frame width in px.
  */
-function sheet(key: string, url: string, frames: number): SpritesheetAsset {
-  return { ...SHEET_BASE, key, url, frames };
+function sheet(key: string, url: string, frames: number, frameWidth: number): SpritesheetAsset {
+  return { ...SHEET_BASE, frameWidth, key, url, frames };
 }
 
 /**
@@ -143,12 +152,13 @@ function makeAnimation(
 ): HeroAnimationDefinition {
   const key = animationKey(characterId, spec.action);
   const attackByFrame = buildAttackByFrame(spec);
+  const frameWidth = animationSheet.frameWidth;
 
   const bounds: HeroBoundsFrame[] = Array.from({ length: spec.frames }, (_, frame) => ({
     frame,
     visual: { ...spec.defaultVisual },
-    collision: collisionBounds(spec.defaultVisual),
-    hit: hitBounds(spec.defaultVisual),
+    collision: collisionBounds(spec.defaultVisual, frameWidth),
+    hit: hitBounds(spec.defaultVisual, frameWidth),
     attack: attackByFrame.get(frame) ?? null,
     guard: spec.guard ? { ...spec.guard } : null
   }));
@@ -203,13 +213,14 @@ function requireSheet(sheets: SpritesheetAsset[], key: string): SpritesheetAsset
 /**
  * Derive a centered collision box from a visual box, anchored to the feet.
  * @param visual - The visual bounding box.
+ * @param frameWidth - Frame width in px; the feet sit at its centre.
  */
-function collisionBounds(visual: Rect): Rect {
+function collisionBounds(visual: Rect, frameWidth: number): Rect {
   const width = Math.min(58, Math.max(34, Math.round(visual.width * 0.46)));
   const height = Math.max(74, Math.round(visual.height * 0.82));
 
   return {
-    x: Math.round(128 - width / 2),
+    x: Math.round(frameWidth / 2 - width / 2),
     y: Math.round(230 - height),
     width,
     height
@@ -219,12 +230,13 @@ function collisionBounds(visual: Rect): Rect {
 /**
  * Derive a slightly padded hurtbox from a visual box.
  * @param visual - The visual bounding box.
+ * @param frameWidth - Frame width in px.
  */
-function hitBounds(visual: Rect): Rect {
+function hitBounds(visual: Rect, frameWidth: number): Rect {
   return {
     x: Math.max(0, visual.x - 4),
     y: Math.max(0, visual.y + 2),
-    width: Math.min(FRAME_WIDTH, visual.width + 8),
+    width: Math.min(frameWidth, visual.width + 8),
     height: Math.min(FRAME_HEIGHT, visual.height)
   };
 }

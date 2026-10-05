@@ -1,0 +1,362 @@
+{
+  "id": "kunoichi",
+  "label": "Kunoichi",
+  "tsFile": "src/game/kunoichi.ts",
+  "constName": "KUNOICHI",
+  "assetRoot": "public/assets/kunoichi",
+  "conceptDir": "concepts/characters/2026-10-04-kunoichi",
+  "reference": "kunoichi-ref.png",
+  "anchorUsage": "kunoichi ninja west-facing high-fidelity anchor",
+  "background": "magenta",
+  "overflowParts": "kunai, scarf or ponytail",
+  "frameWidth": 320,
+  "visualWidthCap": {
+    "default": 120,
+    "light-punch": 140,
+    "heavy-kick": 160,
+    "special": 180,
+    "knockdown": 176
+  },
+  "description": "a slim, agile female ninja (kunoichi): long black high ponytail, dark purple sleeveless short ninja jacket over a mesh undershirt, a long flowing red scarf, black cloth wraps on the forearms and shins, dark fitted trousers, split-toe tabi boots, a dark grey cloth mask covering her nose and mouth, a short steel kunai held reverse-grip in each hand",
+  "style": "SNES-era pixel-art fighting-game sprite",
+  "portrait": {
+    "prompt": "Using the attached character reference exactly (same character: {description}), draw a square character-select portrait in the same pixel-art style: chest-up close-up, the face large with a calm, sharp, focused expression, the head turned three-quarters toward the left, one kunai raised beside the face in a reverse grip, the red scarf and ponytail flowing behind, dramatic rim lighting. Solid dark crimson-purple background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame."
+  },
+  "actions": [
+    {
+      "action": "idle",
+      "label": "Idle",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 8,
+      "repeat": -1,
+      "align": "feet",
+      "note": "A light, bouncy ready stance on the balls of the feet. The feet stay in the same place in every frame; the body bobs gently, the scarf and ponytail sway.",
+      "poses": [
+        "rest pose: low ready stance, knees bent, both kunai held reverse-grip in front of the chest, scarf hanging behind",
+        "body bobs down about 2 pixels, shoulders relaxed, scarf starts to drift back",
+        "lowest point of the bob, knees a little more bent, ponytail swings forward",
+        "rising back up, kunai hands shift slightly, scarf flutters",
+        "highest point, up on the balls of the feet about 2 pixels above rest, ponytail swings back",
+        "returning to the rest pose, very close to frame 1 so the loop is seamless"
+      ]
+    },
+    {
+      "action": "walk-forward",
+      "label": "Walk Forward",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 8,
+      "repeat": -1,
+      "align": "centroid",
+      "note": "A quick, light-footed stalking walk toward the LEFT, staying low. The character stays centred in its cell (walking in place); only the legs, a small body bob, scarf and ponytail move. Kunai stay held in front.",
+      "poses": [
+        "contact: front (left) foot reaching forward on its toes, back foot behind, body low",
+        "down: weight moves onto the front foot, knees bend, body dips about 2 pixels",
+        "passing: back leg sweeps forward past the planted leg, scarf trailing",
+        "contact, opposite leg: the other foot reaching forward on its toes (mirror of frame 1)",
+        "down, opposite leg: weight onto the new front foot, body dips (mirror of frame 2)",
+        "passing, opposite leg: back leg sweeps forward, leading smoothly into frame 1"
+      ]
+    },
+    {
+      "action": "walk-backward",
+      "label": "Walk Backward",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 8,
+      "repeat": -1,
+      "align": "centroid",
+      "note": "A light retreating step: she keeps FACING LEFT toward the enemy, guard up, stepping backward (to the right) on her toes. The character stays centred in its cell (walking in place).",
+      "poses": [
+        "contact: back (right) foot placed behind on its toes, front foot flat, body leaning slightly back, kunai in guard",
+        "down: weight shifts onto the back foot, knees bend slightly",
+        "passing: front foot slides back past the other foot",
+        "contact, opposite leg (mirror of frame 1)",
+        "down, opposite leg (mirror of frame 2)",
+        "passing, opposite leg, leading smoothly into frame 1"
+      ]
+    },
+    {
+      "action": "crouch",
+      "label": "Crouch",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "feet",
+      "note": "Feet stay on the same ground line; the body lowers. The final crouch is about 55 percent of the standing height.",
+      "poses": [
+        "ready stance, same as the reference",
+        "knees bending, body lowering about a quarter of its height",
+        "deep bend, one knee nearly touching the ground, kunai held low",
+        "full low crouch held, one knee down, body about 55 percent of standing height, kunai ready, head looking left",
+        "kneeling, held",
+        "kneeling, held"
+      ],
+      "scaleFrom": 0,
+      "visualFrom": -1,
+      "dropFrames": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "action": "jump",
+      "label": "Jump",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "fixed-y",
+      "note": "The ground line is at the same height in every frame. Frames 1 and 6 have the feet on the ground line; in frames 3, 4 and 5 the whole character is drawn clearly above the ground line (feet about a third of the body height above it). Keep her horizontally centred in her cell.",
+      "poses": [
+        "anticipation: low crouch, knees deeply bent, arms back, feet on the ground line",
+        "launch: legs extending, body stretched upward, feet just leaving the ground line",
+        "rising: whole body above the ground line, knees tucked, scarf streaming below",
+        "apex: highest point, tight front-flip tuck, body curled into a ball",
+        "falling: uncurling, legs extending downward, arms out for balance",
+        "landing: feet back on the ground line, crouched low absorbing the impact, one hand touching the ground"
+      ]
+    },
+    {
+      "action": "block-high",
+      "label": "Block High",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "feet",
+      "note": "Feet stay planted. The block pose is held from frame 3 onward.",
+      "poses": [
+        "ready stance, starting to raise both forearms",
+        "both forearms crossed in front of the face, kunai blades pointing outward",
+        "block held: forearms crossed in an X in front of the face and chest, body braced, knees bent",
+        "block held, identical to frame 3 with a very slight extra brace",
+        "block held, identical to frame 3 with a very slight extra brace (held)",
+        "block held, identical to frame 3 with a very slight extra brace (held)"
+      ],
+      "scaleFrom": 0
+    },
+    {
+      "action": "block-low",
+      "label": "Block Low",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "feet",
+      "note": "Feet stay on the same ground line; the body is crouched. The block pose is held from frame 3 onward.",
+      "poses": [
+        "ready stance, starting to crouch",
+        "crouching, forearms lowering in front of the knees",
+        "block held: low crouch, forearms crossed in an X in front of the shins, kunai pointing down",
+        "block held, identical to frame 3 with a very slight extra brace",
+        "block held, identical to frame 3 with a very slight extra brace (held)",
+        "block held, identical to frame 3 with a very slight extra brace (held)"
+      ],
+      "scaleFrom": 0,
+      "visualFrom": -1,
+      "dropFrames": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "action": "hit-high",
+      "label": "Hit High",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 12,
+      "repeat": 0,
+      "align": "feet",
+      "note": "Being struck in the face from the LEFT: the reaction pushes her back to the RIGHT. Feet stay near the ground line.",
+      "poses": [
+        "impact: head snaps back, eyes shut, torso jerks back, arms flung out",
+        "maximum recoil: torso bent well back, one foot sliding, scarf whipping forward",
+        "recovering: leaning back less, grimacing, weight returning forward",
+        "almost recovered: back near the ready stance with a pained face",
+        "almost recovered: back near the ready stance with a pained face (held)",
+        "almost recovered: back near the ready stance with a pained face (held)"
+      ],
+      "scaleFrom": 5
+    },
+    {
+      "action": "light-punch",
+      "label": "Kunai Jab",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 14,
+      "repeat": 0,
+      "align": "feet",
+      "attack": {
+        "frames": [
+          2,
+          3
+        ],
+        "bounds": [
+          14,
+          84,
+          92,
+          44
+        ]
+      },
+      "note": "A very fast straight kunai thrust toward the LEFT at chest height. The strike frames are 3 and 4.",
+      "poses": [
+        "ready stance, front kunai pulled back slightly",
+        "wind-up: front arm drawn back beside the chest, shoulders twisting",
+        "thrust: front arm shooting forward at chest height, body leaning in",
+        "full extension: arm and kunai fully extended forward to the left at chest height, a short white slash streak at the tip",
+        "pulling the arm back, body still leaning forward",
+        "recovery: back to the ready stance"
+      ],
+      "scaleFrom": 0
+    },
+    {
+      "action": "heavy-kick",
+      "label": "Sweep Kick",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 12,
+      "repeat": 0,
+      "align": "feet",
+      "attack": {
+        "frames": [
+          2,
+          3
+        ],
+        "bounds": [
+          8,
+          120,
+          104,
+          80
+        ]
+      },
+      "note": "A powerful low spinning sweep kick toward the LEFT, aimed at the opponent's shins. The strike frames are 3 and 4.",
+      "poses": [
+        "ready stance, weight shifting onto the back leg, dropping low",
+        "deep crouch, one hand planted on the ground, body starting to spin, the kicking leg pulled in",
+        "sweep: the kicking leg swinging out low and fast to the left, a motion arc behind the foot",
+        "full extension: the leg fully extended forward to the left near the ground at shin height, scarf whipping around",
+        "follow-through: the leg sweeping past, body still low and turning",
+        "recovery: rising back to the ready stance"
+      ]
+    },
+    {
+      "action": "special-charge",
+      "label": "Shadow Seal",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 14,
+      "repeat": 0,
+      "align": "feet",
+      "note": "She powers up in place; feet stay planted. A purple shadow aura grows from faint to intense.",
+      "poses": [
+        "ready stance, hands coming together in front of the chest",
+        "hands forming a ninja seal in front of the face, eyes closed, a faint purple aura appearing",
+        "aura stronger, scarf and ponytail lifting upward, eyes opening",
+        "peak: intense purple shadow aura swirling around her body, kunai glowing, ready to strike",
+        "peak: intense purple shadow aura swirling around her body, kunai glowing, ready to strike (held)",
+        "peak: intense purple shadow aura swirling around her body, kunai glowing, ready to strike (held)"
+      ],
+      "scaleFrom": 0
+    },
+    {
+      "action": "special",
+      "label": "Shadow Flurry",
+      "frames": 9,
+      "grid": "3x3",
+      "fps": 16,
+      "repeat": 0,
+      "align": "fixed",
+      "attackSpans": [
+        {
+          "frames": [
+            2
+          ],
+          "bounds": [
+            6,
+            70,
+            116,
+            96
+          ]
+        },
+        {
+          "frames": [
+            4
+          ],
+          "bounds": [
+            6,
+            70,
+            116,
+            96
+          ]
+        },
+        {
+          "frames": [
+            6
+          ],
+          "bounds": [
+            6,
+            50,
+            116,
+            120
+          ],
+          "frameBounds": [
+            4,
+            44,
+            176,
+            182
+          ]
+        }
+      ],
+      "note": "A three-hit dashing kunai combo toward the LEFT. The strike frames are 3, 5 and 7; frames 4, 6 and 8 are transition frames between hits. Purple shadow after-images trail her.",
+      "poses": [
+        "wind-up: very low dash stance, both kunai drawn back, purple aura",
+        "dashing forward to the left, body almost horizontal, purple after-image behind",
+        "first hit: a wide horizontal slash with the front kunai at chest height, a bright purple slash arc",
+        "transition: spinning, kunai pulled back across the body, after-images trailing",
+        "second hit: a reverse slash with the other kunai at chest height, a purple slash arc",
+        "transition: leaping slightly upward, both kunai raised high",
+        "third hit, the finisher: a big X-shaped double slash downward in front of her, a large purple X burst",
+        "follow-through: landing low, kunai crossed downward, sparks of shadow fading",
+        "recovery: rising back to the ready stance"
+      ],
+      "background": "auto",
+      "scaleFrom": 8,
+      "flipFrames": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "action": "knockdown",
+      "label": "Knockdown",
+      "frames": 9,
+      "grid": "3x3",
+      "fps": 10,
+      "repeat": 0,
+      "align": "fixed-y",
+      "note": "She is hit from the LEFT and falls backward to the RIGHT, ending lying on her back with her head to the right and her feet to the left. The final frames are a held lying pose. The lying body must still fit inside its cell.",
+      "poses": [
+        "hit reaction: head snaps back, torso jerks back",
+        "airborne: leaning back at about 45 degrees, both feet off the ground, arms flung wide",
+        "falling: body nearly horizontal, legs kicked up, scarf flying",
+        "hitting the ground on her back, impact, dust puff",
+        "lying flat on her back, limp, head to the right, feet to the left, a kunai beside her",
+        "lying flat, identical to frame 5 (held pose)",
+        "lying flat (held)",
+        "lying flat (held)",
+        "lying flat (held)"
+      ],
+      "visualFrom": -1,
+      "dropFrames": [
+        6
+      ]
+    }
+  ]
+}

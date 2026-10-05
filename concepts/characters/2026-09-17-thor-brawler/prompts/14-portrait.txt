@@ -1,0 +1,6 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/portrait.png
+square portrait
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same character: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a square character-select portrait in the same pixel-art style: chest-up close-up, the face large and fierce, mouth open in a battle roar, the head turned three-quarters toward the left, the upper part of the axe head visible over the far shoulder with sparks crackling, dramatic rim lighting. Solid dark stormy blue-purple background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame.

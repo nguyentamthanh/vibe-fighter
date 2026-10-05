@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-04-kunoichi/kunoichi-ref.png
+SAVE the result as: concepts/characters/2026-10-04-kunoichi/raw/walk-forward.png
+6 frames, 3x2 grid, 8 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a slim, agile female ninja (kunoichi): long black high ponytail, dark purple sleeveless short ninja jacket over a mesh undershirt, a long flowing red scarf, black cloth wraps on the forearms and shins, dark fitted trousers, split-toe tabi boots, a dark grey cloth mask covering her nose and mouth, a short steel kunai held reverse-grip in each hand), draw a sprite sheet of the "Walk Forward" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. A quick, light-footed stalking walk toward the LEFT, staying low. The character stays centred in its cell (walking in place); only the legs, a small body bob, scarf and ponytail move. Kunai stay held in front.
+Frame 1: contact: front (left) foot reaching forward on its toes, back foot behind, body low.
+Frame 2: down: weight moves onto the front foot, knees bend, body dips about 2 pixels.
+Frame 3: passing: back leg sweeps forward past the planted leg, scarf trailing.
+Frame 4: contact, opposite leg: the other foot reaching forward on its toes (mirror of frame 1).
+Frame 5: down, opposite leg: weight onto the new front foot, body dips (mirror of frame 2).
+Frame 6: passing, opposite leg: back leg sweeps forward, leading smoothly into frame 1.
+Draw the character small inside its cell: including the kunai, scarf or ponytail, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, kunai, scarf or ponytail may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

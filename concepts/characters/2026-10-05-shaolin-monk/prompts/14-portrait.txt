@@ -1,0 +1,6 @@
+ATTACH the reference image: concepts/characters/2026-10-05-shaolin-monk/shaolin-monk-ref.png
+SAVE the result as: concepts/characters/2026-10-05-shaolin-monk/raw/portrait.png
+square portrait
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Now something different: NOT a sprite sheet. Draw ONE single square character-select portrait (one image, no grid, no frames) of the same character (a calm, athletic Shaolin monk: shaved head, an orange-and-yellow monk robe tied at the waist with a brown sash and draped over one shoulder leaving one arm bare, large wooden prayer beads around the neck, white leg wraps, black cloth shoes), in the same pixel-art style but more detailed: chest-up close-up, the face large with a serene but intense expression, one open palm raised in front of the chest with small orange flames, the head turned three-quarters toward the right, dramatic rim lighting. Solid deep red background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame.

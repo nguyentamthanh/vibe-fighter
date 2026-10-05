@@ -1,0 +1,16 @@
+ATTACH the reference image: concepts/characters/2026-10-05-muay-thai/muay-thai-ref.png
+SAVE the result as: concepts/characters/2026-10-05-muay-thai/raw/special.png
+9 frames, 3x3 grid, 16 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a lean, muscular Thai boxer: short black hair, a red-and-white mongkol headband with short tails, red prajied arm bands on both biceps, white hand wraps, shirtless with a tanned toned torso, satin blue Muay Thai shorts with gold trim, bare feet with white ankle wraps), draw a sprite sheet of the "Eight Limbs Fury" animation for a 2D fighting game: 9 frames in a 3x3 grid (3 columns, 3 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. IMPORTANT: NINE frames in a 3x3 grid (3 columns and 3 ROWS). A three-hit combo toward the RIGHT. The strike frames are 3, 5 and 7; frames 4, 6 and 8 are transitions. White impact flashes at each hit.
+Frame 1: wind-up, aura around the body.
+Frame 2: rushing forward to the right.
+Frame 3: first hit: a rising knee strike toward the RIGHT.
+Frame 4: transition, pulling back.
+Frame 5: second hit: a spinning back elbow toward the RIGHT.
+Frame 6: transition, gathering power.
+Frame 7: third hit, the finisher: a flying knee toward the RIGHT, a large burst.
+Frame 8: follow-through.
+Frame 9: recovery to the guard stance.
+Draw the character small inside its cell: including the fists, feet or headband tails, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, fists, feet or headband tails may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

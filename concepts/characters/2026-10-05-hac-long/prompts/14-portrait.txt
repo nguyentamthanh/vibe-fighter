@@ -1,0 +1,6 @@
+ATTACH the reference image: concepts/characters/2026-10-05-hac-long/hac-long-ref.png
+SAVE the result as: concepts/characters/2026-10-05-hac-long/raw/portrait.png
+square portrait
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Now something different: NOT a sprite sheet. Draw ONE single square character-select portrait (one image, no grid, no frames) of the same character (a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards), in the same pixel-art style but more detailed: chest-up close-up, the face large with a cold, confident stare, one hand formed into a dragon claw beside the face with wisps of black smoke and a gold glow, the head turned three-quarters toward the left, dramatic rim lighting. Solid dark charcoal with a faint gold glow background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame.

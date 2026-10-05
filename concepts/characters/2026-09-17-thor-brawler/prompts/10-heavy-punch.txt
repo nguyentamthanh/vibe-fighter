@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/heavy-punch.png
+6 frames, 3x2 grid, 12 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a sprite sheet of the "Heavy Chop" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. A slow, powerful overhead chop toward the LEFT. The strike frames are 4 and 5.
+Frame 1: guard stance, weight sinking onto the back leg, starting to lift the axe up and back.
+Frame 2: axe raised high overhead in both hands, body leaning back, knees bent, sparks gathering on the blades.
+Frame 3: apex of the wind-up: maximum coil, back arched, teeth bared, sparks crackling.
+Frame 4: chopping down: body lunging forward to the left, the axe descending diagonally in front, motion arc of sparks behind the blade.
+Frame 5: impact: the axe blade at waist height in front, body in a deep lunge, a burst of electric sparks at the blade.
+Frame 6: recovery: rising and pulling the axe back toward the guard stance.
+Draw the character small inside its cell: including the axe or sparks, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, axe or sparks may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

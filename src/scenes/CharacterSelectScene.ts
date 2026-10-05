@@ -13,12 +13,24 @@ interface CharacterSelectData {
 
 const P1_COLOR = 0x38bdf8;
 const P2_COLOR = 0xf43f5e;
-const CARD_WIDTH = 300;
-const CARD_HEIGHT = 384;
+const CARD_MAX_WIDTH = 300;
+const CARD_ASPECT = 384 / 300;
+const CARD_GAP = 48;
+const CARD_MARGIN = 40;
+// Vertical band for the cards: below the heading, above the footer hint.
+const CARD_AREA_TOP = 150;
+const CARD_AREA_BOTTOM = 70;
 
-// Temporary: only these fighters are selectable in the Play flow. The full
-// roster (incl. the green boxer) remains available in the Fighter Playground.
-const SELECTABLE_FIGHTER_IDS = ['red-brawler', 'jiujitsu-fighter'];
+const SELECTABLE_FIGHTER_IDS = [
+  'red-brawler',
+  'jiujitsu-fighter',
+  'green-boxer',
+  'viking-berserker',
+  'kunoichi',
+  'muay-thai',
+  'shaolin-monk',
+  'hac-long'
+];
 const SELECTABLE_ROSTER = FIGHTER_CHARACTER_DEFINITIONS.filter((character) =>
   SELECTABLE_FIGHTER_IDS.includes(character.id)
 );
@@ -41,6 +53,8 @@ export class CharacterSelectScene extends BaseScene {
   private stageId = '';
   private cards: SelectionCard[] = [];
   private cardPositions: Array<{ x: number; y: number }> = [];
+  private cardWidth = CARD_MAX_WIDTH;
+  private cardHeight = Math.round(CARD_MAX_WIDTH * CARD_ASPECT);
   private p1!: PlayerCursor;
   private p2!: PlayerCursor;
   private transitioning = false;
@@ -78,27 +92,53 @@ export class CharacterSelectScene extends BaseScene {
     });
   }
 
+  /**
+   * Lays the roster out on a grid, picking the column count that gives the
+   * largest card that fits both the screen width and the band between the
+   * heading and the footer (ties prefer fewer columns, i.e. balanced rows).
+   * Cursor order stays the roster order.
+   */
   private buildCards(): void {
-    const { centerX, centerY } = this.cameras.main;
+    const { centerX, width, height } = this.cameras.main;
     const roster = SELECTABLE_ROSTER;
-    const gap = 48;
-    const totalWidth = CARD_WIDTH * roster.length + gap * (roster.length - 1);
-    const startX = centerX - totalWidth / 2 + CARD_WIDTH / 2;
-    const y = centerY + 24;
+    const areaHeight = height - CARD_AREA_TOP - CARD_AREA_BOTTOM;
+    const fitCard = (columns: number): number => {
+      const rowCount = Math.ceil(roster.length / columns);
+      const byWidth = (width - 2 * CARD_MARGIN - CARD_GAP * (columns - 1)) / columns;
+      const byHeight = (areaHeight - CARD_GAP * (rowCount - 1)) / rowCount / CARD_ASPECT;
+      return Math.floor(Math.min(CARD_MAX_WIDTH, byWidth, byHeight));
+    };
+    let columns = 1;
+    for (let candidate = 2; candidate <= roster.length; candidate++) {
+      if (fitCard(candidate) > fitCard(columns)) {
+        columns = candidate;
+      }
+    }
+    const rows = Math.ceil(roster.length / columns);
+
+    this.cardWidth = fitCard(columns);
+    this.cardHeight = Math.round(this.cardWidth * CARD_ASPECT);
+    const cardScale = this.cardWidth / CARD_MAX_WIDTH;
+    const totalHeight = rows * this.cardHeight + (rows - 1) * CARD_GAP;
+    const firstY = CARD_AREA_TOP + (areaHeight - totalHeight) / 2 + this.cardHeight / 2;
 
     roster.forEach((character, index) => {
-      const x = startX + index * (CARD_WIDTH + gap);
+      const row = Math.floor(index / columns);
+      const inRow = Math.min(columns, roster.length - row * columns);
+      const rowWidth = inRow * this.cardWidth + (inRow - 1) * CARD_GAP;
+      const x = centerX - rowWidth / 2 + this.cardWidth / 2 + (index % columns) * (this.cardWidth + CARD_GAP);
+      const y = firstY + row * (this.cardHeight + CARD_GAP);
       this.cardPositions.push({ x, y });
 
       const card = createSelectionCard(this, {
         x,
         y,
-        width: CARD_WIDTH,
-        height: CARD_HEIGHT,
+        width: this.cardWidth,
+        height: this.cardHeight,
         title: character.label,
         texture: this.textures.exists(character.portrait.key) ? character.portrait.key : undefined,
-        imageMaxSize: CARD_WIDTH - 36,
-        imageOffsetY: -34,
+        imageMaxSize: this.cardWidth - 36,
+        imageOffsetY: Math.round(-34 * cardScale),
         onHover: () => this.hoverCard(index),
         onClick: () => this.clickCard(index)
       });
@@ -123,7 +163,7 @@ export class CharacterSelectScene extends BaseScene {
 
   private createCursor(label: string, color: number, index: number): PlayerCursor {
     const outline = this.add
-      .rectangle(0, 0, CARD_WIDTH + 16, CARD_HEIGHT + 16, color, 0)
+      .rectangle(0, 0, this.cardWidth + 16, this.cardHeight + 16, color, 0)
       .setStrokeStyle(4, color, 1)
       .setDepth(20);
 
@@ -149,7 +189,7 @@ export class CharacterSelectScene extends BaseScene {
 
     cursor.outline.setPosition(position.x, position.y);
     cursor.outline.setStrokeStyle(cursor.locked ? 7 : 4, cursor.outline.strokeColor, 1);
-    cursor.label.setPosition(position.x, position.y - CARD_HEIGHT / 2 - 18);
+    cursor.label.setPosition(position.x, position.y - this.cardHeight / 2 - 18);
   }
 
   private registerInput(): void {

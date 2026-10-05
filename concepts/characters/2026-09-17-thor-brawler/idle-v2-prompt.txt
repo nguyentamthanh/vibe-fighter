@@ -1,0 +1,16 @@
+Tool: Gemini API (gemini-2.5-flash-image) via scripts/genart/generate-image.mjs
+Reference: viking-thunder-warrior-ref.png
+Goal: idle sprite sheet, 8 frames, 4x2 grid, magenta background, distinct pose per frame.
+Why: idle-spritesheet-attempt1.png (prompted only "8 frame idle") produced 8 near-identical frames.
+
+Prompt:
+Using the attached character reference exactly (same Viking berserker: braided blonde hair and beard, fur-trimmed leather armor with metal pauldron, double-headed rune axe with faint electric sparks; same design, colours, proportions and SNES-era pixel-art style), draw a sprite sheet of a looping IDLE breathing animation: 8 frames in a 4x2 grid (4 columns, 2 rows), read left-to-right then top-to-bottom. Every frame is the same size, same scale, same ground line, character facing LEFT in a 3/4 side fighting stance. The feet stay planted in exactly the same place in every frame; only the upper body, arms, axe, hair and sparks move.
+Frame 1: rest pose, chest neutral, both knees slightly bent, axe held level across the body, braid hanging still, faint sparks on the blade.
+Frame 2: inhale begins, chest and shoulders rise about 2 pixels, axe head lifts slightly, braid starts to swing forward.
+Frame 3: inhale continues, shoulders raised about 4 pixels, chest expanded, knees straighten a little, axe head tilts up slightly, sparks brighter.
+Frame 4: peak of the breath, chest at its highest, head raised slightly, axe head at its highest point, braid swung furthest forward, sparks at their brightest.
+Frame 5: exhale begins, shoulders drop about 2 pixels, axe head starts to lower, braid swings back.
+Frame 6: exhale continues, chest lowers, knees bend a little deeper, axe head dips below level, sparks dim.
+Frame 7: lowest point, torso crouched about 3 pixels lower than rest, knees most bent, axe head lowest, braid swung furthest back, sparks faint.
+Frame 8: recovery, torso rising back toward the rest pose, very close to frame 1 so the loop is seamless, axe head returning to level.
+Each frame must sit fully inside its own cell with clear padding: no part of the character, axe or sparks may cross into a neighbouring cell. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

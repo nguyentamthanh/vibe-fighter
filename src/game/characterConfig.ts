@@ -216,17 +216,21 @@ function normalizeBoundsByKind(value: unknown): Partial<Record<CharacterBoundsKi
   return normalized;
 }
 
+// Frames are 256px tall; some fighters use wider frames (FighterCharacterConfig.frameWidth).
+const MAX_FRAME_WIDTH = 512;
+const FRAME_HEIGHT = 256;
+
 function normalizeRect(value: Partial<Rect>): Rect | null {
-  const x = clampInt(value.x, 0, 255, 0);
-  const y = clampInt(value.y, 0, 255, 0);
-  const width = clampInt(value.width, 1, 256, 1);
-  const height = clampInt(value.height, 1, 256, 1);
+  const x = clampInt(value.x, 0, MAX_FRAME_WIDTH - 1, 0);
+  const y = clampInt(value.y, 0, FRAME_HEIGHT - 1, 0);
+  const width = clampInt(value.width, 1, MAX_FRAME_WIDTH, 1);
+  const height = clampInt(value.height, 1, FRAME_HEIGHT, 1);
 
   return {
     x,
     y,
-    width: Math.min(width, 256 - x),
-    height: Math.min(height, 256 - y)
+    width: Math.min(width, MAX_FRAME_WIDTH - x),
+    height: Math.min(height, FRAME_HEIGHT - y)
   };
 }
 

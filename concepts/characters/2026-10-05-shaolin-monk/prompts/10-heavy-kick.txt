@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-05-shaolin-monk/shaolin-monk-ref.png
+SAVE the result as: concepts/characters/2026-10-05-shaolin-monk/raw/heavy-kick.png
+6 frames, 3x2 grid, 12 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a calm, athletic Shaolin monk: shaved head, an orange-and-yellow monk robe tied at the waist with a brown sash and draped over one shoulder leaving one arm bare, large wooden prayer beads around the neck, white leg wraps, black cloth shoes), draw a sprite sheet of the "Sweep Kick" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. A low sweeping kick along the ground toward the RIGHT, aimed at the shins. The strike frames are 3 and 4.
+Frame 1: guard stance, weight shifting onto the back leg.
+Frame 2: wind-up, body turning, the kicking leg chambered.
+Frame 3: kick: the leg sweeping forward to the RIGHT near the ground, a motion arc behind the leg.
+Frame 4: full extension: the leg sweeping forward to the RIGHT near the ground.
+Frame 5: follow-through.
+Frame 6: recovery to the guard stance.
+Draw the character small inside its cell: including the robe, sash or prayer beads, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, robe, sash or prayer beads may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-04-kunoichi/kunoichi-ref.png
+SAVE the result as: concepts/characters/2026-10-04-kunoichi/raw/knockdown.png
+6 frames, 3x2 grid, 10 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a slim, agile female ninja (kunoichi): long black high ponytail, dark purple sleeveless short ninja jacket over a mesh undershirt, a long flowing red scarf, black cloth wraps on the forearms and shins, dark fitted trousers, split-toe tabi boots, a dark grey cloth mask covering her nose and mouth, a short steel kunai held reverse-grip in each hand), draw a sprite sheet of the "Knockdown" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. She is hit from the LEFT and falls backward to the RIGHT, ending lying on her back with her head to the right and her feet to the left. The final frames are a held lying pose. The lying body must still fit inside its cell.
+Frame 1: hit reaction: head snaps back, torso jerks back.
+Frame 2: airborne: leaning back at about 45 degrees, both feet off the ground, arms flung wide.
+Frame 3: falling: body nearly horizontal, legs kicked up, scarf flying.
+Frame 4: hitting the ground on her back, impact, dust puff.
+Frame 5: lying flat on her back, limp, head to the right, feet to the left, a kunai beside her.
+Frame 6: lying flat, identical to frame 5 (held pose).
+Draw the character small inside its cell: including the kunai, scarf or ponytail, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, kunai, scarf or ponytail may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

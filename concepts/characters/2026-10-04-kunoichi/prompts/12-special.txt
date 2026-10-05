@@ -1,0 +1,16 @@
+ATTACH the reference image: concepts/characters/2026-10-04-kunoichi/kunoichi-ref.png
+SAVE the result as: concepts/characters/2026-10-04-kunoichi/raw/special.png
+9 frames, 3x3 grid, 16 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a slim, agile female ninja (kunoichi): long black high ponytail, dark purple sleeveless short ninja jacket over a mesh undershirt, a long flowing red scarf, black cloth wraps on the forearms and shins, dark fitted trousers, split-toe tabi boots, a dark grey cloth mask covering her nose and mouth, a short steel kunai held reverse-grip in each hand), draw a sprite sheet of the "Shadow Flurry" animation for a 2D fighting game: 9 frames in a 3x3 grid (3 columns, 3 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. A three-hit dashing kunai combo toward the LEFT. The strike frames are 3, 5 and 7; frames 4, 6 and 8 are transition frames between hits. Purple shadow after-images trail her.
+Frame 1: wind-up: very low dash stance, both kunai drawn back, purple aura.
+Frame 2: dashing forward to the left, body almost horizontal, purple after-image behind.
+Frame 3: first hit: a wide horizontal slash with the front kunai at chest height, a bright purple slash arc.
+Frame 4: transition: spinning, kunai pulled back across the body, after-images trailing.
+Frame 5: second hit: a reverse slash with the other kunai at chest height, a purple slash arc.
+Frame 6: transition: leaping slightly upward, both kunai raised high.
+Frame 7: third hit, the finisher: a big X-shaped double slash downward in front of her, a large purple X burst.
+Frame 8: follow-through: landing low, kunai crossed downward, sparks of shadow fading.
+Frame 9: recovery: rising back to the ready stance.
+Draw the character small inside its cell: including the kunai, scarf or ponytail, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, kunai, scarf or ponytail may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

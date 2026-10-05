@@ -1,0 +1,15 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/idle.png
+8 frames, 4x2 grid, 8 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a sprite sheet of the "Idle" animation for a 2D fighting game: 8 frames in a 4x2 grid (4 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. The feet stay planted in exactly the same place in every frame; only the upper body, arms, axe, hair and sparks move.
+Frame 1: rest pose, chest neutral, both knees slightly bent, axe held level across the body, braid hanging still, faint sparks on the blade.
+Frame 2: inhale begins, chest and shoulders rise about 2 pixels, axe head lifts slightly, braid starts to swing forward.
+Frame 3: inhale continues, shoulders raised about 4 pixels, chest expanded, knees straighten a little, axe head tilts up slightly, sparks brighter.
+Frame 4: peak of the breath, chest at its highest, head raised slightly, axe head at its highest point, braid swung furthest forward, sparks at their brightest.
+Frame 5: exhale begins, shoulders drop about 2 pixels, axe head starts to lower, braid swings back.
+Frame 6: exhale continues, chest lowers, knees bend a little deeper, axe head dips below level, sparks dim.
+Frame 7: lowest point, torso about 3 pixels lower than the rest pose, knees most bent, axe head lowest, braid swung furthest back, sparks faint.
+Frame 8: recovery, torso rising back toward the rest pose, very close to frame 1 so the loop is seamless, axe head returning to level.
+Draw the character small inside its cell: including the axe or sparks, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, axe or sparks may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

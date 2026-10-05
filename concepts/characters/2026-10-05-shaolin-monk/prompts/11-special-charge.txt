@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-05-shaolin-monk/shaolin-monk-ref.png
+SAVE the result as: concepts/characters/2026-10-05-shaolin-monk/raw/special-charge.png
+6 frames, 3x2 grid, 14 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a calm, athletic Shaolin monk: shaved head, an orange-and-yellow monk robe tied at the waist with a brown sash and draped over one shoulder leaving one arm bare, large wooden prayer beads around the neck, white leg wraps, black cloth shoes), draw a sprite sheet of the "Inner Fire" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. Powering up in place; feet stay planted. Orange flames grow around both hands and an orange aura rises around the body.
+Frame 1: guard stance.
+Frame 2: focusing, a faint aura appearing.
+Frame 3: aura growing stronger.
+Frame 4: aura strong, muscles tense.
+Frame 5: peak power, aura blazing.
+Frame 6: same as frame 5, aura flickering.
+Draw the character small inside its cell: including the robe, sash or prayer beads, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, robe, sash or prayer beads may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

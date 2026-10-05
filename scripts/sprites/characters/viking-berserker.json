@@ -1,0 +1,334 @@
+{
+  "id": "viking-berserker",
+  "label": "Viking Berserker",
+  "tsFile": "src/game/vikingBerserker.ts",
+  "constName": "VIKING_BERSERKER",
+  "assetRoot": "public/assets/viking-berserker",
+  "conceptDir": "concepts/characters/2026-09-17-thor-brawler",
+  "reference": "viking-thunder-warrior-ref.png",
+  "anchorUsage": "viking berserker west-facing high-fidelity anchor",
+  "background": "magenta",
+  "overflowParts": "axe or sparks",
+  "visualWidthCap": {
+    "default": 132,
+    "light-punch": 150,
+    "heavy-punch": 160,
+    "special": 184,
+    "knockdown": 176
+  },
+  "description": "a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades",
+  "style": "SNES-era pixel-art fighting-game sprite",
+  "portrait": {
+    "prompt": "Using the attached character reference exactly (same character: {description}), draw a square character-select portrait in the same pixel-art style: chest-up close-up, the face large and fierce, mouth open in a battle roar, the head turned three-quarters toward the left, the upper part of the axe head visible over the far shoulder with sparks crackling, dramatic rim lighting. Solid dark stormy blue-purple background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame.",
+    "flip": true
+  },
+  "targetHeight": 196,
+  "frameWidth": 352,
+  "drawFacing": "RIGHT",
+  "actions": [
+    {
+      "action": "idle",
+      "label": "Idle",
+      "frames": 8,
+      "grid": "4x2",
+      "fps": 8,
+      "repeat": -1,
+      "align": "feet",
+      "note": "The feet stay planted in exactly the same place in every frame; only the upper body, arms, axe, hair and sparks move.",
+      "poses": [
+        "rest pose, chest neutral, both knees slightly bent, axe held level across the body, braid hanging still, faint sparks on the blade",
+        "inhale begins, chest and shoulders rise about 2 pixels, axe head lifts slightly, braid starts to swing forward",
+        "inhale continues, shoulders raised about 4 pixels, chest expanded, knees straighten a little, axe head tilts up slightly, sparks brighter",
+        "peak of the breath, chest at its highest, head raised slightly, axe head at its highest point, braid swung furthest forward, sparks at their brightest",
+        "exhale begins, shoulders drop about 2 pixels, axe head starts to lower, braid swings back",
+        "exhale continues, chest lowers, knees bend a little deeper, axe head dips below level, sparks dim",
+        "lowest point, torso about 3 pixels lower than the rest pose, knees most bent, axe head lowest, braid swung furthest back, sparks faint",
+        "recovery, torso rising back toward the rest pose, very close to frame 1 so the loop is seamless, axe head returning to level"
+      ]
+    },
+    {
+      "action": "walk-forward",
+      "label": "Walk Forward",
+      "frames": 8,
+      "grid": "4x2",
+      "fps": 8,
+      "repeat": -1,
+      "align": "centroid",
+      "dropFrames": [
+        7
+      ],
+      "note": "A heavy, stomping walk cycle moving toward the LEFT. The character stays centred in its cell (walking in place); only the legs, torso bob and axe move. The axe stays held across the body in both hands.",
+      "poses": [
+        "contact: the left (front) foot heel planted far ahead, the right (back) foot toe still on the ground behind, torso upright",
+        "down: weight sinks onto the front foot, knees bend, torso dips about 3 pixels, the back foot lifts off the ground",
+        "passing: the back leg swings forward past the planted leg, body at mid height, axe head bobs up slightly",
+        "up: body at its highest point, the swinging leg reaching forward, weight rising over the planted leg",
+        "contact, opposite leg: the other foot heel planted far ahead, the first foot toe on the ground behind (mirror of frame 1)",
+        "down, opposite leg: weight sinks onto the new front foot, torso dips about 3 pixels (mirror of frame 2)",
+        "passing, opposite leg: the back leg swings forward past the planted leg, axe head bobs up (mirror of frame 3)",
+        "up, opposite leg: body at its highest point, leading smoothly back into frame 1 (mirror of frame 4)"
+      ]
+    },
+    {
+      "action": "walk-backward",
+      "label": "Walk Backward",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 8,
+      "repeat": -1,
+      "align": "centroid",
+      "note": "A cautious retreating shuffle: the character keeps FACING LEFT toward the enemy, guard up, but steps backward (moving to the right) with short steps. The character stays centred in its cell (walking in place); only the legs, torso bob and axe move.",
+      "poses": [
+        "contact: the right (back) foot toe placed behind, the left foot flat in front, torso leaning very slightly back, axe held guard-level",
+        "down: weight shifts onto the back foot, knees bend slightly, torso dips about 2 pixels",
+        "passing: the front (left) foot slides back past the other foot, body at mid height",
+        "contact, opposite leg: the left foot toe placed behind, the right foot flat in front (mirror of frame 1)",
+        "down, opposite leg: weight shifts onto the back foot, torso dips about 2 pixels (mirror of frame 2)",
+        "passing, opposite leg: the front (right) foot slides back past the other foot, leading smoothly into frame 1"
+      ]
+    },
+    {
+      "action": "crouch",
+      "label": "Crouch",
+      "frames": 4,
+      "grid": "2x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "feet",
+      "note": "The four frames show four clearly DIFFERENT poses going from standing down to kneeling; the feet stay on the same ground line.",
+      "poses": [
+        "standing guard stance exactly as in the reference, full height",
+        "half squat: knees bent forward, hips pushed back and down, torso leaning forward, the head clearly lower than in frame 1",
+        "dropping to one knee: the back (right) knee almost touching the ground, the front foot planted, axe lowered in front",
+        "kneeling on the right knee with the left foot planted in front, torso upright and compact, axe held horizontally across the chest, head still looking left; the whole body is only about 60 percent as tall as in frame 1"
+      ],
+      "scaleFrom": 0,
+      "visualFrom": -1
+    },
+    {
+      "action": "jump",
+      "label": "Jump",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "fixed-y",
+      "note": "The ground line is at the same height in every frame. Frames 1 and 6 have the feet on the ground line; in frames 3, 4 and 5 the whole character is drawn clearly above the ground line (feet about a quarter of the body height above it). Keep the character horizontally centred in its cell.",
+      "poses": [
+        "anticipation: deep crouch, knees very bent, torso low, axe pulled back, feet on the ground line",
+        "launch: legs extending, body stretched upward, feet just leaving the ground line",
+        "rising: whole body above the ground line, knees drawn up, axe held across the body",
+        "apex: highest point, knees tucked toward the chest, axe raised, body compact",
+        "falling: legs extending downward again, axe lowering, body dropping toward the ground line",
+        "landing: feet back on the ground line, knees deeply bent absorbing the impact, axe low"
+      ]
+    },
+    {
+      "action": "block-high",
+      "label": "Block High",
+      "frames": 4,
+      "grid": "2x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "feet",
+      "note": "Feet stay planted in the same place in every frame. The blocking pose is held from frame 3 onward.",
+      "poses": [
+        "guard stance, starting to raise the axe shaft with both hands",
+        "the axe shaft raised horizontally in front of the face and upper body, elbows tucked in, head lowered behind it",
+        "block held: axe shaft across chest and face height, body braced, knees bent, sparks flaring where the blade tilts up",
+        "block held, identical to frame 3 with a very slight extra brace (shoulders 1 pixel lower)"
+      ],
+      "scaleFrom": 0
+    },
+    {
+      "action": "block-low",
+      "label": "Block Low",
+      "frames": 4,
+      "grid": "2x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "feet",
+      "note": "Feet stay on the same ground line; the body is crouched. The blocking pose is held from frame 3 onward.",
+      "poses": [
+        "guard stance, starting to crouch and lower the axe",
+        "crouching, knees bending, axe head lowering in front of the legs",
+        "block held: low crouch, axe held vertically in front of the shins with the blade down, torso leaning forward behind it",
+        "block held, identical to frame 3 with a very slight extra brace"
+      ],
+      "scaleFrom": 0,
+      "visualFrom": -1
+    },
+    {
+      "action": "hit-high",
+      "label": "Hit High",
+      "frames": 4,
+      "grid": "2x2",
+      "fps": 12,
+      "repeat": 0,
+      "align": "feet",
+      "note": "Being struck in the face/upper body from the LEFT: the reaction pushes the character back to the RIGHT. Feet stay near the ground line, one foot may slide.",
+      "poses": [
+        "moment of impact: head snaps back, eyes squeezed shut in pain, torso jerks back a few pixels, axe swings loosely",
+        "maximum recoil: torso leaning well back, head thrown back, one foot sliding, arms pushed back",
+        "recovering: torso leaning back less, grimacing, weight returning to the front foot",
+        "almost recovered: back near the guard stance with a pained face"
+      ],
+      "scaleFrom": 3
+    },
+    {
+      "action": "light-punch",
+      "label": "Light Attack",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 14,
+      "repeat": 0,
+      "align": "fixed",
+      "attack": {
+        "frames": [
+          2,
+          3
+        ],
+        "bounds": [
+          8,
+          78,
+          104,
+          52
+        ]
+      },
+      "note": "A fast horizontal axe slash toward the LEFT at chest height. The strike frames are 3 and 4.",
+      "poses": [
+        "guard stance, weight shifting back, hands tightening on the shaft",
+        "wind-up: the axe pulled back to the right side of the body, torso twisted away from the target",
+        "strike begins: torso twisting forward, the axe swinging forward at chest height, arms extending",
+        "full extension: the axe fully extended forward to the left at chest height, blade leading, small electric arc trailing behind it",
+        "follow-through: the axe swung past the target, body leaning into the swing, back foot on its toes",
+        "recovery: pulling the axe back toward the body, returning to the guard stance"
+      ],
+      "scaleFrom": 0
+    },
+    {
+      "action": "heavy-punch",
+      "label": "Heavy Chop",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 12,
+      "repeat": 0,
+      "align": "fixed",
+      "attack": {
+        "frames": [
+          3,
+          4
+        ],
+        "bounds": [
+          4,
+          64,
+          116,
+          100
+        ]
+      },
+      "note": "A slow, powerful overhead chop toward the LEFT. The strike frames are 4 and 5.",
+      "poses": [
+        "guard stance, weight sinking onto the back leg, starting to lift the axe up and back",
+        "axe raised high overhead in both hands, body leaning back, knees bent, sparks gathering on the blades",
+        "apex of the wind-up: maximum coil, back arched, teeth bared, sparks crackling",
+        "chopping down: body lunging forward to the left, the axe descending diagonally in front, motion arc of sparks behind the blade",
+        "impact: the axe blade at waist height in front, body in a deep lunge, a burst of electric sparks at the blade",
+        "recovery: rising and pulling the axe back toward the guard stance"
+      ]
+    },
+    {
+      "action": "special-charge",
+      "label": "Storm Charge",
+      "frames": 4,
+      "grid": "2x2",
+      "fps": 14,
+      "repeat": 0,
+      "align": "feet",
+      "note": "The character powers up in place; feet stay planted. The electric sparks grow from faint to intense.",
+      "poses": [
+        "guard stance, gripping the axe with both hands, a few sparks on the blade",
+        "lowering into a wide stance, pulling the axe back beside the body, sparks gathering along the blades",
+        "body coiled, muscles tense, teeth bared, electric arcs crackling along the whole axe",
+        "peak charge: roaring, lightning arcing around the axe and the arms, the axe head glowing bright yellow-white"
+      ],
+      "scaleFrom": 0
+    },
+    {
+      "action": "special",
+      "label": "Storm Whirlwind",
+      "frames": 9,
+      "grid": "3x3",
+      "fps": 16,
+      "repeat": 0,
+      "align": "fixed",
+      "attack": null,
+      "attackSpans": [
+        {
+          "frames": [
+            2
+          ],
+          "bounds": [
+            4,
+            66,
+            122,
+            104
+          ]
+        },
+        {
+          "frames": [
+            4
+          ],
+          "bounds": [
+            4,
+            66,
+            122,
+            104
+          ]
+        },
+        {
+          "frames": [
+            6
+          ],
+          "bounds": [
+            4,
+            66,
+            122,
+            104
+          ]
+        }
+      ],
+      "note": "A three-hit spinning axe combo toward the RIGHT (the way he faces). The strike frames are 3, 5 and 7; frames 4, 6 and 8 are transition frames between hits. Lightning trails follow the axe.",
+      "poses": [
+        "wind-up: deep crouch, the axe pulled far back behind the body, intense sparks on the blades",
+        "lunging forward to the right, body turning, the axe starting to swing",
+        "first hit: a wide horizontal sweep, the axe fully extended forward at chest height, a bright lightning arc trailing behind it",
+        "transition: body rotating, the axe pulled back across the body, crouched, sparks trailing",
+        "second hit: a reverse spinning sweep, the axe fully extended forward at chest height, torso twisted, lightning arc trailing",
+        "transition: rising up, the axe lifted high overhead in both hands, body stretched tall",
+        "third hit, the finisher: a huge overhead slam, the axe blade driving down in front of the body, a large lightning burst at the impact point",
+        "follow-through: the axe buried low at the ground in front, body bowed, sparks fading",
+        "recovery: standing back up, pulling the axe back to the guard stance"
+      ],
+      "scaleFrom": 8
+    },
+    {
+      "action": "knockdown",
+      "label": "Knockdown",
+      "frames": 6,
+      "grid": "3x2",
+      "fps": 10,
+      "repeat": 0,
+      "align": "fixed",
+      "note": "The character is hit from the RIGHT (the side he faces) and falls backward to the LEFT, ending lying on his back with his head to the left and his feet to the right. The final frames are a held lying pose. The lying body must still fit inside its cell.",
+      "poses": [
+        "hit reaction: head snaps back, torso jerks back, axe swinging loosely in one hand",
+        "airborne: leaning back at about 45 degrees, both feet off the ground, arms flung wide, axe dropping",
+        "falling: body nearly horizontal in the air, legs kicked up, axe tumbling beside him",
+        "hitting the ground on his back, impact, body slightly bent, dust puff",
+        "lying flat on his back, limp, head to the left, feet to the right, the axe on the ground beside him",
+        "lying flat, identical to frame 5 (held pose)"
+      ],
+      "visualFrom": -1
+    }
+  ]
+}

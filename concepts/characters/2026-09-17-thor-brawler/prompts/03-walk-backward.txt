@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-09-17-thor-brawler/viking-thunder-warrior-ref.png
+SAVE the result as: concepts/characters/2026-09-17-thor-brawler/raw/walk-backward.png
+6 frames, 3x2 grid, 8 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce Viking berserker: muscular, braided blonde hair and full blonde beard, dark leather-and-fur armour with one large spiked steel pauldron, crossed leather straps with a bear-head belt buckle, leather bracers, brown trousers, fur-trimmed leather boots, wielding a large two-handed double-headed rune-etched battle-axe with faint yellow electric sparks crackling along the blades), draw a sprite sheet of the "Walk Backward" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. A cautious retreating shuffle: the character keeps FACING LEFT toward the enemy, guard up, but steps backward (moving to the right) with short steps. The character stays centred in its cell (walking in place); only the legs, torso bob and axe move.
+Frame 1: contact: the right (back) foot toe placed behind, the left foot flat in front, torso leaning very slightly back, axe held guard-level.
+Frame 2: down: weight shifts onto the back foot, knees bend slightly, torso dips about 2 pixels.
+Frame 3: passing: the front (left) foot slides back past the other foot, body at mid height.
+Frame 4: contact, opposite leg: the left foot toe placed behind, the right foot flat in front (mirror of frame 1).
+Frame 5: down, opposite leg: weight shifts onto the back foot, torso dips about 2 pixels (mirror of frame 2).
+Frame 6: passing, opposite leg: the front (right) foot slides back past the other foot, leading smoothly into frame 1.
+Draw the character small inside its cell: including the axe or sparks, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, axe or sparks may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

@@ -1,0 +1,18 @@
+Tool: Gemini (gemini.google.com, model "Flash")
+Date: 2026-09-17
+
+Note: first attempt used an explicit "thunder-god" + hammer + lightning
+framing (Thor-style) and was blocked by Gemini's own filter with:
+"I can't generate the image you requested right now due to interests of
+third-party content providers." Reworded to a generic Viking-berserker
+archetype (axe instead of hammer, no cape, no "thunder-god" wording) and it
+generated successfully.
+
+Prompt used (successful):
+Try again with a different concept: an original SNES-era pixel-art
+fighting-game character, a fierce Viking berserker warrior with braided
+blonde hair and beard, tribal fur-trimmed leather armor with metal pauldron,
+wielding a large double-headed battle-axe with faint electric sparks along
+the edge, fierce battle stance. Isolated full-body, 3/4 side-facing fighting
+stance, centered with generous padding, plain white background, no stage, no
+HUD, no opponent, no logos, no text.

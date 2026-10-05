@@ -2,6 +2,9 @@ import { FIGHTER_CHARACTER_DEFINITIONS, getCharacterDefinition } from './hero';
 import { RED_BRAWLER_CHARACTER_ID } from './redBrawler';
 import { GREEN_BOXER_CHARACTER_ID } from './greenBoxer';
 import { JIUJITSU_FIGHTER_CHARACTER_ID } from './jiujitsuFighter';
+import { VIKING_BERSERKER_CHARACTER_ID } from './vikingBerserker';
+import { KUNOICHI_CHARACTER_ID } from './kunoichi';
+import { MUAY_THAI_CHARACTER_ID } from './muayThai';
 import type {
   AttackKind,
   AttackProfile,
@@ -33,7 +36,13 @@ export const DEFAULT_FIGHTER_STATS: FighterStats = {
 const FIGHTER_STAT_OVERRIDES: Record<string, Partial<FighterStats>> = {
   [RED_BRAWLER_CHARACTER_ID]: {},
   [GREEN_BOXER_CHARACTER_ID]: { walkSpeed: 250, jump: 1000 },
-  [JIUJITSU_FIGHTER_CHARACTER_ID]: { walkSpeed: 240, airDrift: 210, jump: 1040 }
+  [JIUJITSU_FIGHTER_CHARACTER_ID]: { walkSpeed: 240, airDrift: 210, jump: 1040 },
+  // Heavy and slow: walks and jumps less than the others.
+  [VIKING_BERSERKER_CHARACTER_ID]: { walkSpeed: 200, airDrift: 170, jump: 920 },
+  // Light and fast: quickest walk and highest jump.
+  [KUNOICHI_CHARACTER_ID]: { walkSpeed: 270, airDrift: 230, jump: 1080 },
+  // Pressure fighter: steps in quickly, short reach.
+  [MUAY_THAI_CHARACTER_ID]: { walkSpeed: 250, jump: 1000 }
 };
 
 /**
@@ -89,6 +98,29 @@ const FIGHTER_COMBAT_OVERRIDES: Record<string, Partial<FighterCombat>> = {
     lowHitstun: 480,
     specialDamage: 5,
     specialHitstun: 220
+  },
+  // Tanky, with a hard-hitting heavy chop and a three-hit special.
+  [VIKING_BERSERKER_CHARACTER_ID]: {
+    maxHealth: 115,
+    highDamage: 8,
+    lowDamage: 14,
+    lowKnockback: 380,
+    specialDamage: 8,
+    specialKnockback: 190
+  },
+  // Fragile but quick: less health and lighter hits than the default, a fast three-hit special.
+  [KUNOICHI_CHARACTER_ID]: {
+    maxHealth: 90,
+    highDamage: 6,
+    lowDamage: 10,
+    specialDamage: 7
+  },
+  // Hard hitter at close range: strong elbows and low kicks to make up for the short reach.
+  [MUAY_THAI_CHARACTER_ID]: {
+    highDamage: 8,
+    lowDamage: 13,
+    lowKnockback: 360,
+    specialDamage: 8
   }
 };
 
