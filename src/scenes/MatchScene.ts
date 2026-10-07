@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 
 import { Fighter, NEUTRAL_FIGHTER_INPUT, type FighterInput } from '../game/fighter';
+import { GOLDEN_BELL_FIGHTERS, GoldenBellShield } from '../game/goldenBell';
 import { getCharacterDefinition } from '../game/hero';
 import { MatchHud } from '../game/matchHud';
 import { getStageDefinition } from '../game/stageConfig';
@@ -62,6 +63,8 @@ export class MatchScene extends BaseScene {
   private p1Keys!: PlayerKeys;
   private p2Keys!: PlayerKeys;
   private cpu?: CpuController;
+  /** Guard effects keyed by the fighter they protect (only fighters in GOLDEN_BELL_FIGHTERS). */
+  private bells = new Map<Fighter, GoldenBellShield>();
 
   private phase: MatchPhase = 'intro';
   private roundNumber = 1;
@@ -134,6 +137,8 @@ export class MatchScene extends BaseScene {
     this.startRound();
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.bells.forEach((bell) => bell.destroy());
+      this.bells.clear();
       this.p1?.destroy();
       this.p2?.destroy();
       this.hud?.destroy();
@@ -184,6 +189,7 @@ export class MatchScene extends BaseScene {
 
     this.p1.update(seconds, p1Input);
     this.p2.update(seconds, p2Input);
+    this.bells.forEach((bell) => bell.update());
 
     this.updateCamera(false);
 
@@ -249,7 +255,13 @@ export class MatchScene extends BaseScene {
     attacker.registerOffense(blocked, isSpecial);
     defender.registerDefense(blocked);
 
-    this.spawnHitFx(attack.rect, hurt, blocked, isSpecial, finisher);
+    const bell = blocked ? this.bells.get(defender) : undefined;
+    this.spawnHitFx(attack.rect, hurt, blocked, isSpecial, finisher, bell !== undefined);
+
+    if (bell) {
+      const contact = Phaser.Geom.Rectangle.GetCenter(attack.rect);
+      bell.strike(contact.x, contact.y, attacker.x);
+    }
   }
 
   /**
@@ -260,18 +272,20 @@ export class MatchScene extends BaseScene {
    * @param blocked - Whether the hit was guarded.
    * @param isSpecial - Whether the attack was a special move.
    * @param finisher - Whether this is the special's finishing hit.
+   * @param goldenGuard - The block was made by a Golden Bell fighter (gold spark instead of blue).
    */
   private spawnHitFx(
     attackRect: Phaser.Geom.Rectangle,
     hurtRect: Phaser.Geom.Rectangle,
     blocked: boolean,
     isSpecial: boolean,
-    finisher: boolean
+    finisher: boolean,
+    goldenGuard = false
   ): void {
     const sparkX = (Phaser.Geom.Rectangle.GetCenter(attackRect).x + Phaser.Geom.Rectangle.GetCenter(hurtRect).x) / 2;
     const sparkY = (Phaser.Geom.Rectangle.GetCenter(attackRect).y + Phaser.Geom.Rectangle.GetCenter(hurtRect).y) / 2;
 
-    const color: VfxColor = blocked ? 'blue' : finisher ? 'gold' : 'red';
+    const color: VfxColor = blocked ? (goldenGuard ? 'gold' : 'blue') : finisher ? 'gold' : 'red';
     const sparkScale = finisher ? 1.7 : isSpecial ? 1.1 : 0.9;
     spawnHitSpark(this, sparkX, sparkY, color, sparkScale);
 
@@ -384,6 +398,13 @@ export class MatchScene extends BaseScene {
       depth: DEPTH_BACK,
       onSpecialStart: (fighter) => playSuperCutIn(this, { characterId: fighter.characterId, side: 'right' })
     });
+
+    this.bells.clear();
+    [this.p1, this.p2]
+      .filter((fighter) => GOLDEN_BELL_FIGHTERS.includes(fighter.characterId))
+      .forEach((fighter) => {
+        this.bells.set(fighter, new GoldenBellShield(this, fighter, () => this.app.settingsStore.getState()));
+      });
   }
 
   /**
@@ -499,6 +520,7 @@ export class MatchScene extends BaseScene {
 
     this.p1.resetForRound(this.spawnX1, 1);
     this.p2.resetForRound(this.spawnX2, -1);
+    this.bells.forEach((bell) => bell.hide());
     this.p1.setDepthBase(DEPTH_FRONT);
     this.p2.setDepthBase(DEPTH_BACK);
     this.updateCamera(true);

@@ -120,8 +120,36 @@ export const MODE_CARD_IMAGE_ASSETS: ImageAsset[] = [
   }
 ];
 
+/**
+ * Combat effect sheets (drawn on black, rendered with additive blending). Built by
+ * `scripts/sprites/effect.py`; the animations are registered in {@link registerStarterAnimations}.
+ */
+export const VFX_SPRITESHEET_ASSETS: Array<SpritesheetAsset & { frameRate: number; repeat: number }> = [
+  {
+    kind: 'spritesheet',
+    key: 'golden-bell-idle',
+    url: '/assets/vfx/golden-bell-idle.png',
+    frameWidth: 320,
+    frameHeight: 384,
+    frames: 8,
+    frameRate: 10,
+    repeat: -1
+  },
+  {
+    kind: 'spritesheet',
+    key: 'golden-bell-hit',
+    url: '/assets/vfx/golden-bell-hit.png',
+    frameWidth: 480,
+    frameHeight: 384,
+    frames: 8,
+    frameRate: 16,
+    repeat: 0
+  }
+];
+
 export const STARTER_ASSETS: StarterAsset[] = [
   ...CHARACTER_ASSETS,
+  ...VFX_SPRITESHEET_ASSETS,
   ...STAGE_IMAGE_ASSETS,
   ...MODE_CARD_IMAGE_ASSETS,
   ...TILE_IMAGE_ASSETS,
@@ -196,6 +224,19 @@ export function registerStarterAnimations(scene: Phaser.Scene): void {
       }),
       frameRate: animation.frameRate,
       repeat: animation.repeat
+    });
+  });
+
+  VFX_SPRITESHEET_ASSETS.forEach((sheet) => {
+    if (scene.anims.exists(sheet.key) || !scene.textures.exists(sheet.key)) {
+      return;
+    }
+
+    scene.anims.create({
+      key: sheet.key,
+      frames: scene.anims.generateFrameNumbers(sheet.key, { start: 0, end: sheet.frames - 1 }),
+      frameRate: sheet.frameRate,
+      repeat: sheet.repeat
     });
   });
 }

@@ -224,6 +224,29 @@ export class Fighter {
     return this.defeated;
   }
 
+  /** Whether a block pose is showing (held block or blockstun) — drives guard effects. */
+  get isGuarding(): boolean {
+    return (
+      !this.defeated &&
+      (this.currentAnimKey === this.actionKeys.blockHigh || this.currentAnimKey === this.actionKeys.blockLow)
+    );
+  }
+
+  /** World y of the ground line the fighter's feet stand on. */
+  get groundLine(): number {
+    return this.groundY;
+  }
+
+  /** The display scale applied to the sprite. */
+  get displayScale(): number {
+    return this.appliedScale;
+  }
+
+  /** Render depth of the fighter sprite (changes when the active fighter is drawn in front). */
+  get spriteDepth(): number {
+    return this.depthBase;
+  }
+
   /** The fighter's special meter charge (0..1). */
   get meter01(): number {
     return METER_MAX > 0 ? Phaser.Math.Clamp(this.meter / METER_MAX, 0, 1) : 0;

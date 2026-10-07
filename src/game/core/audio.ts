@@ -159,6 +159,55 @@ export function playGeneratedAudioCue(
   oscillator.stop(now + cueAsset.durationSeconds + 0.02);
 }
 
+/** Temple-bell partials: [frequency ratio to the fundamental, relative level, decay seconds]. */
+const BELL_PARTIALS: Array<[number, number, number]> = [
+  [1, 1, 1.6],
+  [2.01, 0.55, 1.1],
+  [2.76, 0.35, 0.8],
+  [5.4, 0.18, 0.45],
+  [8.93, 0.08, 0.25]
+];
+
+/**
+ * Plays a synthesized temple-bell "dong" (a few decaying sine partials) — the
+ * Golden Bell guard being struck. Respects mute and the SFX volume.
+ * @param settings - Current audio settings.
+ * @param fundamental - Base pitch in Hz.
+ * @param audioCtx - Audio context to play on (defaults to the shared one).
+ */
+export function playBellStrike(settings: GameSettings, fundamental = 196, audioCtx?: AudioContext): void {
+  const volume = getEffectiveVolume(0.32, 'sfx', settings);
+
+  if (volume <= 0) {
+    return;
+  }
+
+  const ctx = audioCtx ?? getAudioContext();
+  if (ctx.state === 'suspended') {
+    void ctx.resume();
+  }
+
+  const now = ctx.currentTime;
+  const master = ctx.createGain();
+  master.gain.setValueAtTime(volume, now);
+  master.connect(ctx.destination);
+
+  BELL_PARTIALS.forEach(([ratio, level, decay]) => {
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(fundamental * ratio * (1 + (Math.random() - 0.5) * 0.004), now);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(level, now + 0.006);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+    oscillator.connect(gain);
+    gain.connect(master);
+    oscillator.start(now);
+    oscillator.stop(now + decay + 0.05);
+  });
+}
+
 function cue(
   key: string,
   category: AudioCategory,
