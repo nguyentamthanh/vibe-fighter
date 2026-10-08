@@ -1,19 +1,24 @@
 import * as Phaser from 'phaser';
 
+import { BLADE_QI_FIGHTERS, BladeQi, BladeQiCaster } from '../game/bladeQi';
 import { Fighter, NEUTRAL_FIGHTER_INPUT, type FighterInput } from '../game/fighter';
 import { GOLDEN_BELL_FIGHTERS, GoldenBellShield } from '../game/goldenBell';
 import { getCharacterDefinition } from '../game/hero';
+import { MatchAnnouncer } from '../game/matchAnnouncer';
 import { MatchHud } from '../game/matchHud';
-import { getStageDefinition } from '../game/stageConfig';
+import { MatchResults, type RoundOutcome, type RoundRecord } from '../game/matchResults';
+import { createStageAmbience } from '../game/stageAmbience';
+import { DEFAULT_GROUND_FRACTION, getStageDefinition } from '../game/stageConfig';
 import { playSuperCutIn } from '../game/superCutIn';
-import { SCENE_KEYS, type MatchConfig } from '../game/types';
+import { SCENE_KEYS, type AttackProfile, type MatchConfig } from '../game/types';
 import { spawnHitSpark, type VfxColor } from '../game/vfx';
 import { BaseScene } from './BaseScene';
 
-const GROUND_FRACTION = 0.82;
 const EDGE_MARGIN = 170;
 const DEPTH_FRONT = 8;
 const DEPTH_BACK = 5;
+// Blade-qi crescents fly in front of both fighters (and the front ambience), under the HUD.
+const QI_DEPTH = 12;
 
 // Fraction of the gap from the screen centre each fighter occupies at spawn.
 const SPAWN_OFFSET_FRACTION = 0.18;
@@ -27,6 +32,9 @@ const ROUND_SECONDS = 60;
 const HUD_DEPTH = 100;
 const BANNER_DEPTH = 200;
 const OVERLAY_DEPTH = 300;
+// The K.O. plays in slow motion for a moment (fighters and their animations).
+const KO_SLOW_MOTION = 0.3;
+const KO_SLOW_MOTION_MS = 700;
 
 /** The match's high-level state, driving input gating and the HUD. */
 type MatchPhase = 'intro' | 'fighting' | 'roundEnd' | 'matchOver';
@@ -65,6 +73,10 @@ export class MatchScene extends BaseScene {
   private cpu?: CpuController;
   /** Guard effects keyed by the fighter they protect (only fighters in GOLDEN_BELL_FIGHTERS). */
   private bells = new Map<Fighter, GoldenBellShield>();
+  /** Purple aura + crescent launchers for the fighters in BLADE_QI_FIGHTERS. */
+  private qiCasters = new Map<Fighter, BladeQiCaster>();
+  /** Blade-qi crescents in flight. */
+  private bladeQi: BladeQi[] = [];
 
   private phase: MatchPhase = 'intro';
   private roundNumber = 1;
@@ -76,11 +88,14 @@ export class MatchScene extends BaseScene {
 
   private stageWorldWidth = 0;
   private maxScroll = 0;
+  private groundY = 0;
 
   private hud!: MatchHud;
-  private banner!: Phaser.GameObjects.Text;
+  private announcer!: MatchAnnouncer;
+  private results?: MatchResults;
+  private rounds: RoundRecord[] = [];
+  private timeWarp = 1;
   private roundTimeMs = ROUND_SECONDS * 1000;
-  private overlay: Phaser.GameObjects.GameObject[] = [];
 
   constructor() {
     super(SCENE_KEYS.Match);
@@ -98,7 +113,9 @@ export class MatchScene extends BaseScene {
     this.roundNumber = 1;
     this.p1Wins = 0;
     this.p2Wins = 0;
-    this.overlay = [];
+    this.rounds = [];
+    this.results = undefined;
+    this.timeWarp = 1;
 
     this.markActiveScene(SCENE_KEYS.Match);
     this.cameras.main.setBackgroundColor(0x05070d);
@@ -117,18 +134,7 @@ export class MatchScene extends BaseScene {
     });
     this.hud.slideIn();
 
-    this.banner = this.add
-      .text(this.cameras.main.centerX, this.cameras.main.centerY - 40, '', {
-        color: '#f8fafc',
-        fontFamily: 'monospace',
-        fontSize: '64px',
-        stroke: '#020617',
-        strokeThickness: 8
-      })
-      .setOrigin(0.5)
-      .setDepth(BANNER_DEPTH)
-      .setScrollFactor(0)
-      .setAlpha(0);
+    this.announcer = new MatchAnnouncer(this, BANNER_DEPTH, () => this.app.settingsStore.getState());
 
     if (this.config.mode === '1vcpu') {
       this.cpu = new CpuController();
@@ -139,9 +145,16 @@ export class MatchScene extends BaseScene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.bells.forEach((bell) => bell.destroy());
       this.bells.clear();
+      this.bladeQi.forEach((qi) => qi.destroy());
+      this.bladeQi = [];
+      this.qiCasters.forEach((caster) => caster.destroy());
+      this.qiCasters.clear();
       this.p1?.destroy();
       this.p2?.destroy();
       this.hud?.destroy();
+      this.results?.destroy();
+      this.announcer?.destroy();
+      this.anims.globalTimeScale = 1;
     });
   }
 
@@ -153,7 +166,7 @@ export class MatchScene extends BaseScene {
    * @param delta - Milliseconds since the previous frame.
    */
   update(time: number, delta: number): void {
-    const seconds = delta / 1000;
+    const seconds = (delta * this.timeWarp) / 1000;
     const fighting = this.phase === 'fighting';
 
     const p1Input = fighting ? this.readKeys(this.p1Keys) : { ...NEUTRAL_FIGHTER_INPUT };
@@ -190,6 +203,7 @@ export class MatchScene extends BaseScene {
     this.p1.update(seconds, p1Input);
     this.p2.update(seconds, p2Input);
     this.bells.forEach((bell) => bell.update());
+    this.updateBladeQi(seconds);
 
     this.updateCamera(false);
 
@@ -234,34 +248,87 @@ export class MatchScene extends BaseScene {
       return;
     }
 
+    if (this.landStrike(attacker, defender, attack.rect, attack.profile, attack.finisher)) {
+      attacker.markAttackConnected();
+    }
+  }
+
+  /**
+   * Applies one strike (a melee attack box or a projectile) to the defender if
+   * it overlaps the defender's hurtbox: guard check, damage or chip, meter,
+   * hit effects and the Golden Bell. Returns whether it connected.
+   * @param attacker - The fighter the strike belongs to.
+   * @param defender - The fighter being struck.
+   * @param rect - The strike's box in world space.
+   * @param baseProfile - Damage, knockback and hitstun of the strike.
+   * @param finisherHit - The last hit of a special (launches harder unless blocked).
+   */
+  private landStrike(
+    attacker: Fighter,
+    defender: Fighter,
+    rect: Phaser.Geom.Rectangle,
+    baseProfile: AttackProfile,
+    finisherHit: boolean
+  ): boolean {
     const hurt = defender.getHurtRect();
-    if (!hurt || !Phaser.Geom.Intersects.RectangleToRectangle(attack.rect, hurt)) {
-      return;
+    if (!hurt || !Phaser.Geom.Intersects.RectangleToRectangle(rect, hurt)) {
+      return false;
     }
 
     const guard = defender.getGuardRect();
-    const blocked = guard !== null && Phaser.Geom.Intersects.RectangleToRectangle(attack.rect, guard);
-    const isSpecial = attack.profile.kind === 'special';
-    const finisher = attack.finisher && !blocked;
+    const blocked = guard !== null && Phaser.Geom.Intersects.RectangleToRectangle(rect, guard);
+    const isSpecial = baseProfile.kind === 'special';
+    const finisher = finisherHit && !blocked;
 
-    // The combo finisher launches harder and stuns longer than a regular hit.
+    const bell = blocked ? this.bells.get(defender) : undefined;
+    // The combo finisher launches harder and stuns longer than a regular hit;
+    // the Golden Bell turns a block into a wall that no chip damage gets through.
     const profile = finisher
-      ? { ...attack.profile, knockback: attack.profile.knockback * 1.9, hitstun: attack.profile.hitstun * 1.4 }
-      : attack.profile;
+      ? { ...baseProfile, knockback: baseProfile.knockback * 1.9, hitstun: baseProfile.hitstun * 1.4 }
+      : bell
+        ? { ...baseProfile, guardBreak: 0 }
+        : baseProfile;
 
     defender.applyHit(profile, attacker.facingDirection, blocked);
     defender.flashHit(blocked);
-    attacker.markAttackConnected();
     attacker.registerOffense(blocked, isSpecial);
     defender.registerDefense(blocked);
 
-    const bell = blocked ? this.bells.get(defender) : undefined;
-    this.spawnHitFx(attack.rect, hurt, blocked, isSpecial, finisher, bell !== undefined);
+    this.spawnHitFx(rect, hurt, blocked, isSpecial, finisher, bell !== undefined);
 
     if (bell) {
-      const contact = Phaser.Geom.Rectangle.GetCenter(attack.rect);
+      const contact = Phaser.Geom.Rectangle.GetCenter(rect);
       bell.strike(contact.x, contact.y, attacker.x);
     }
+
+    return true;
+  }
+
+  /**
+   * Launches and moves the blade-qi crescents, and lands any that reach the
+   * opponent (they fly through the air, so a crescent connects once and bursts).
+   * @param seconds - Delta time in seconds (already slowed during a K.O.).
+   */
+  private updateBladeQi(seconds: number): void {
+    this.qiCasters.forEach((caster) => this.bladeQi.push(...caster.update(QI_DEPTH)));
+
+    this.bladeQi.forEach((qi) => {
+      qi.update(seconds);
+      const defender = qi.owner === this.p1 ? this.p2 : this.p1;
+      if (qi.isAlive && this.phase === 'fighting' && !defender.isDefeated) {
+        if (this.landStrike(qi.owner, defender, qi.rect, qi.owner.specialProfile, qi.finisher)) {
+          qi.burst(true);
+        }
+      }
+    });
+    this.bladeQi = this.bladeQi.filter((qi) => qi.isAlive);
+  }
+
+  /** Removes every crescent in flight and hides the auras (round reset). */
+  private clearBladeQi(): void {
+    this.bladeQi.forEach((qi) => qi.destroy());
+    this.bladeQi = [];
+    this.qiCasters.forEach((caster) => caster.hide());
   }
 
   /**
@@ -326,9 +393,9 @@ export class MatchScene extends BaseScene {
     const p2 = this.p2.health01;
 
     if (p1 > p2) {
-      this.endRound(1, 'TIME UP', '#facc15');
+      this.endRound(1, 'time');
     } else if (p2 > p1) {
-      this.endRound(2, 'TIME UP', '#facc15');
+      this.endRound(2, 'time');
     } else {
       this.drawRound();
     }
@@ -341,8 +408,9 @@ export class MatchScene extends BaseScene {
     }
 
     this.phase = 'roundEnd';
-    this.showBanner('DRAW', '#e2e8f0', 1.1);
-    this.time.delayedCall(1100, () => this.startRound());
+    this.rounds.push({ winner: 0, outcome: 'draw' });
+    this.announcer.showDraw();
+    this.time.delayedCall(1600, () => this.startRound());
   }
 
   /**
@@ -361,12 +429,14 @@ export class MatchScene extends BaseScene {
 
     this.add.image(0, 0, stage.key).setOrigin(0, 0).setScale(scale).setDepth(0);
     cam.setBounds(0, 0, this.stageWorldWidth, cam.height);
+    this.groundY = Math.round(cam.height * (stage.groundFraction ?? DEFAULT_GROUND_FRACTION));
+    createStageAmbience(this, stage.ambience ?? [], this.groundY);
   }
 
   /** Spawns P1 (left, facing right) and P2 (right, facing left). */
   private spawnFighters(): void {
     const cam = this.cameras.main;
-    const groundY = Math.round(cam.height * GROUND_FRACTION);
+    const groundY = this.groundY;
     const minX = EDGE_MARGIN;
     const maxX = this.stageWorldWidth - EDGE_MARGIN;
     const center = this.stageWorldWidth / 2;
@@ -405,6 +475,12 @@ export class MatchScene extends BaseScene {
       .forEach((fighter) => {
         this.bells.set(fighter, new GoldenBellShield(this, fighter, () => this.app.settingsStore.getState()));
       });
+
+    this.qiCasters.clear();
+    this.bladeQi = [];
+    [this.p1, this.p2]
+      .filter((fighter) => BLADE_QI_FIGHTERS.includes(fighter.characterId))
+      .forEach((fighter) => this.qiCasters.set(fighter, new BladeQiCaster(this, fighter)));
   }
 
   /**
@@ -521,41 +597,44 @@ export class MatchScene extends BaseScene {
     this.p1.resetForRound(this.spawnX1, 1);
     this.p2.resetForRound(this.spawnX2, -1);
     this.bells.forEach((bell) => bell.hide());
+    this.clearBladeQi();
     this.p1.setDepthBase(DEPTH_FRONT);
     this.p2.setDepthBase(DEPTH_BACK);
     this.updateCamera(true);
     this.hud.animateFill();
     this.hud.updateWins(this.p1Wins, this.p2Wins);
 
-    this.showBanner(`ROUND ${this.roundNumber}`, '#f8fafc');
+    const finalRound = this.p1Wins === ROUNDS_TO_WIN - 1 && this.p2Wins === ROUNDS_TO_WIN - 1;
+    this.announcer.showRound(this.roundNumber, finalRound);
 
-    this.time.delayedCall(900, () => {
+    this.time.delayedCall(1000, () => {
       if (this.phase !== 'intro') {
         return;
       }
 
-      this.showBanner('FIGHT!', '#facc15', 1.15);
+      this.announcer.showFight();
       this.phase = 'fighting';
       this.p1.setFrozen(false);
       this.p2.setFrozen(false);
 
-      this.time.delayedCall(650, () => this.hideBanner());
+      this.time.delayedCall(700, () => this.announcer.hide());
     });
   }
 
   /**
    * Concludes the current round, tallies the win, and either advances to the
-   * next round or ends the match.
+   * next round or ends the match. A K.O. plays in slow motion with the
+   * announcer's call (PERFECT when the winner took no damage).
    * @param winner - Which player won (1 or 2).
-   * @param bannerText - The banner to show (defaults to a knockout).
-   * @param bannerColor - The banner colour.
+   * @param how - A knockout or the clock running out.
    */
-  private endRound(winner: 1 | 2, bannerText = 'K.O.', bannerColor = '#f43f5e'): void {
+  private endRound(winner: 1 | 2, how: 'ko' | 'time' = 'ko'): void {
     if (this.phase !== 'fighting') {
       return;
     }
 
     this.phase = 'roundEnd';
+    this.hud.applyHealth(this.p1.health01, this.p2.health01);
 
     if (winner === 1) {
       this.p1Wins += 1;
@@ -563,18 +642,30 @@ export class MatchScene extends BaseScene {
       this.p2Wins += 1;
     }
 
-    const winnerName =
-      winner === 1
-        ? `P1 ${getCharacterDefinition(this.config.p1CharacterId).label}`
-        : `${this.config.mode === '1vcpu' ? 'CPU' : 'P2'} ${getCharacterDefinition(this.config.p2CharacterId).label}`;
-    this.showBanner(bannerText, bannerColor, 1.2);
+    const winnerFighter = winner === 1 ? this.p1 : this.p2;
+    const perfect = how === 'ko' && winnerFighter.health01 >= 1;
+    const outcome: RoundOutcome = how === 'time' ? 'time' : perfect ? 'perfect' : 'ko';
+    this.rounds.push({ winner, outcome });
 
-    this.time.delayedCall(1100, () => {
+    const winnerName = getCharacterDefinition(
+      winner === 1 ? this.config.p1CharacterId : this.config.p2CharacterId
+    ).label.toUpperCase();
+
+    if (how === 'ko') {
+      this.announcer.showKnockout(winnerName, perfect);
+      this.setSlowMotion(true);
+      this.time.delayedCall(KO_SLOW_MOTION_MS, () => this.setSlowMotion(false));
+    } else {
+      this.announcer.showTimeUp(winnerName);
+    }
+
+    this.time.delayedCall(perfect ? 2400 : 2000, () => {
       const matchOver = this.p1Wins >= ROUNDS_TO_WIN || this.p2Wins >= ROUNDS_TO_WIN;
 
       if (matchOver) {
-        this.endMatch(winnerName);
+        this.endMatch(winner);
       } else {
+        this.announcer.hide();
         this.roundNumber += 1;
         this.startRound();
       }
@@ -582,102 +673,49 @@ export class MatchScene extends BaseScene {
   }
 
   /**
-   * Shows the game-over overlay with the match winner and rematch / menu options.
-   * @param winnerName - The display name of the match winner.
+   * Slows the fighters (movement and animations) for the K.O. moment, or restores normal speed.
+   * @param on - Whether slow motion is active.
    */
-  private endMatch(winnerName: string): void {
-    this.phase = 'matchOver';
-    this.hideBanner();
-
-    const { centerX, centerY, width, height } = this.cameras.main;
-
-    const dim = this.add
-      .rectangle(centerX, centerY, width, height, 0x020617, 0.62)
-      .setDepth(OVERLAY_DEPTH)
-      .setScrollFactor(0);
-
-    const title = this.add
-      .text(centerX, centerY - 90, `${winnerName}  WINS!`, {
-        color: '#facc15',
-        fontFamily: 'monospace',
-        fontSize: '46px',
-        stroke: '#020617',
-        strokeThickness: 6,
-        align: 'center'
-      })
-      .setOrigin(0.5)
-      .setDepth(OVERLAY_DEPTH)
-      .setScrollFactor(0);
-
-    const score = this.add
-      .text(centerX, centerY - 30, `${this.p1Wins} - ${this.p2Wins}`, {
-        color: '#e2e8f0',
-        fontFamily: 'monospace',
-        fontSize: '28px'
-      })
-      .setOrigin(0.5)
-      .setDepth(OVERLAY_DEPTH)
-      .setScrollFactor(0);
-
-    const rematch = this.makeOverlayButton(centerX, centerY + 40, 'Rematch  (R)', () => this.rematch());
-    const menu = this.makeOverlayButton(centerX, centerY + 96, 'Main Menu  (Esc)', () => this.goToMenu());
-
-    this.overlay = [dim, title, score, rematch, menu];
+  private setSlowMotion(on: boolean): void {
+    this.timeWarp = on ? KO_SLOW_MOTION : 1;
+    this.anims.globalTimeScale = on ? KO_SLOW_MOTION : 1;
   }
 
   /**
-   * Builds a clickable overlay button with hover feedback.
-   * @param x - Centre x.
-   * @param y - Centre y.
-   * @param label - Button text.
-   * @param onClick - Click handler.
+   * Shows the results screen with both fighters, the score, the round history
+   * and the winner's quote.
+   * @param winner - Which player won the match.
    */
-  private makeOverlayButton(x: number, y: number, label: string, onClick: () => void): Phaser.GameObjects.Text {
-    const button = this.add
-      .text(x, y, label, {
-        color: '#e2e8f0',
-        fontFamily: 'monospace',
-        fontSize: '22px',
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        padding: { x: 18, y: 10 }
-      })
-      .setOrigin(0.5)
-      .setDepth(OVERLAY_DEPTH)
-      .setScrollFactor(0)
-      .setInteractive({ useHandCursor: true });
+  private endMatch(winner: 1 | 2): void {
+    this.phase = 'matchOver';
+    this.announcer.hide();
 
-    button.on('pointerover', () => button.setColor('#facc15'));
-    button.on('pointerout', () => button.setColor('#e2e8f0'));
-    button.on('pointerdown', onClick);
-
-    return button;
+    this.results = new MatchResults(this, {
+      mode: this.config.mode,
+      p1CharacterId: this.config.p1CharacterId,
+      p2CharacterId: this.config.p2CharacterId,
+      p1Wins: this.p1Wins,
+      p2Wins: this.p2Wins,
+      roundsToWin: ROUNDS_TO_WIN,
+      winner,
+      rounds: this.rounds,
+      depth: OVERLAY_DEPTH,
+      settings: () => this.app.settingsStore.getState(),
+      onRematch: () => this.rematch(),
+      onMenu: () => this.goToMenu()
+    });
   }
 
   /** Restarts the match from round 1 with the same configuration. */
   private rematch(): void {
-    this.overlay.forEach((object) => object.destroy());
-    this.overlay = [];
+    this.results?.destroy();
+    this.results = undefined;
+    this.rounds = [];
     this.roundNumber = 1;
     this.p1Wins = 0;
     this.p2Wins = 0;
     this.cpu = this.config.mode === '1vcpu' ? new CpuController() : undefined;
     this.startRound();
-  }
-
-  /**
-   * Shows the centre banner with a short pop-in tween.
-   * @param text - The banner text.
-   * @param color - The text colour.
-   * @param peakScale - The scale to settle at (default 1).
-   */
-  private showBanner(text: string, color: string, peakScale = 1): void {
-    this.banner.setText(text).setColor(color).setScale(0.6).setAlpha(0);
-    this.tweens.add({ targets: this.banner, alpha: 1, scale: peakScale, duration: 260, ease: 'Back.Out' });
-  }
-
-  /** Fades the centre banner out. */
-  private hideBanner(): void {
-    this.tweens.add({ targets: this.banner, alpha: 0, duration: 300 });
   }
 }
 

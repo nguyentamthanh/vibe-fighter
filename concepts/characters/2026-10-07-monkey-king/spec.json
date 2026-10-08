@@ -1,0 +1,33 @@
+{
+  "id": "monkey-king",
+  "label": "Monkey King",
+  "ts": "monkeyKing",
+  "const": "MONKEY_KING",
+  "date": "2026-10-07",
+  "description": "an agile monkey-style kung-fu fighter inspired by the Monkey King of Journey to the West: a cheeky monkey-like face with golden-tan fur on the face and arms, a thin gold circlet on the head, a red and gold armoured vest, a tiger-skin kilt over yellow trousers, black boots, holding a long red staff with gold bands at both ends",
+  "overflow": "the long staff",
+  "portrait": "a cocky grin, the gold-banded staff resting on one shoulder, one hand shading the eyes as if spotting a rival",
+  "portrait_bg": "warm orange clouds",
+  "facing": "RIGHT",
+  "frameWidth": 384,
+  "visualWidthCap": { "default": 120, "light-punch": 150, "heavy-kick": 170, "special": 190, "knockdown": 176 },
+  "moves": {
+    "idle": "bouncy, crouched monkey-style kung-fu, staff held across the body",
+    "block": "the staff held vertically",
+    "light_label": "Staff Jab",
+    "light": "A fast straight staff jab toward the LEFT at head height, the staff pushed forward with both hands.",
+    "light_hit": "the staff tip jabbing forward to the LEFT at head height",
+    "heavy_label": "Tail Sweep",
+    "heavy": "A low spinning staff sweep along the ground toward the LEFT, aimed at the ankles, the body crouched low.",
+    "heavy_hit": "the staff sweeping low to the LEFT just above the ground",
+    "charge_label": "Golden Eyes",
+    "charge": "His eyes glow gold and gold dust with small white cloud puffs swirls around him and the staff (gold and white only).",
+    "special_label": "Thousand Staff Storm",
+    "special_fx": "Gold dust and white cloud puffs follow the staff (gold and white only).",
+    "hits": [
+      "a rapid spinning staff strike with a gold arc",
+      "a leaping staff swing with gold dust",
+      "a huge overhead staff slam releasing a gold shockwave along the ground"
+    ]
+  }
+}

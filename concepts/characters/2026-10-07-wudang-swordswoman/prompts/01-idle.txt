@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-07-wudang-swordswoman/wudang-swordswoman-ref.png
+SAVE the result as: concepts/characters/2026-10-07-wudang-swordswoman/raw/idle.png
+6 frames, 3x2 grid, 8 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a graceful young Wudang swordswoman: long black hair in a high bun held by a jade hairpin with a few loose strands, a calm determined face, a white and pale-blue Taoist robe with wide flowing sleeves and a blue sash belt, white trousers, black cloth shoes, holding a straight double-edged jian sword with a silver blade and a long blue tassel on the hilt), draw a sprite sheet of the "Idle" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. A light, flowing tai chi sword fighting stance. The feet stay in the same place in every frame; only the body bobs and breathes.
+Frame 1: rest pose in the guard stance.
+Frame 2: body dips about 2 pixels, shoulders relax.
+Frame 3: lowest point of the breath.
+Frame 4: rising back up.
+Frame 5: highest point, chest expanded.
+Frame 6: returning to the rest pose, very close to frame 1 so the loop is seamless.
+Draw the character small inside its cell: including the the sword blade, the sword tassel or the wide sleeves, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, the sword blade, the sword tassel or the wide sleeves may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

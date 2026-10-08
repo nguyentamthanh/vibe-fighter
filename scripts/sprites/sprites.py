@@ -209,9 +209,14 @@ def remove_line_runs(rgba: np.ndarray, min_frac: float = 0.2) -> int:
     dark = (rgba[..., 3] > ALPHA_T) & (rgb.sum(-1) < 3 * 90)
     height, width = dark.shape
     line = np.zeros_like(dark)
-    for structure, length, along in (([[0, 0, 0], [1, 1, 1], [0, 0, 0]], width, 1),
-                                      ([[0, 1, 0], [0, 1, 0], [0, 1, 0]], height, 0)):
-        lab, _ = ndimage.label(dark, structure=np.array(structure))
+    # Only THIN dark pixels can belong to a line: a horizontal line is at most 2 px tall, a vertical one at most
+    # 2 px wide. Without this, every column of a black garment (Hắc Long's trousers) counted as a vertical "line"
+    # and the leg was erased.
+    thin_rows = dark & ~ndimage.binary_opening(dark, structure=np.ones((3, 1), dtype=bool))
+    thin_cols = dark & ~ndimage.binary_opening(dark, structure=np.ones((1, 3), dtype=bool))
+    for structure, length, along, thin in (([[0, 0, 0], [1, 1, 1], [0, 0, 0]], width, 1, thin_rows),
+                                            ([[0, 1, 0], [0, 1, 0], [0, 1, 0]], height, 0, thin_cols)):
+        lab, _ = ndimage.label(thin, structure=np.array(structure))
         for i, sl in enumerate(ndimage.find_objects(lab), start=1):
             if sl[along].stop - sl[along].start >= min_frac * length:
                 line[sl] |= lab[sl] == i

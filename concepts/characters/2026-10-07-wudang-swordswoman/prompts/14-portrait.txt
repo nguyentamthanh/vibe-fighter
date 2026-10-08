@@ -1,0 +1,6 @@
+ATTACH the reference image: concepts/characters/2026-10-07-wudang-swordswoman/wudang-swordswoman-ref.png
+SAVE the result as: concepts/characters/2026-10-07-wudang-swordswoman/raw/portrait.png
+square portrait
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Now something different: NOT a sprite sheet. Draw ONE single square character-select portrait (one image, no grid, no frames) of the same character (a graceful young Wudang swordswoman: long black hair in a high bun held by a jade hairpin with a few loose strands, a calm determined face, a white and pale-blue Taoist robe with wide flowing sleeves and a blue sash belt, white trousers, black cloth shoes, holding a straight double-edged jian sword with a silver blade and a long blue tassel on the hilt), in the same pixel-art style but more detailed: chest-up close-up, the face large with a calm, piercing gaze, the jian sword held upright beside the face with its blade catching the light and the blue tassel flowing, the head turned three-quarters toward the left, dramatic rim lighting. Solid misty pale blue mountains at dawn background with a subtle pixel texture, no other characters, no text, no logo, no watermark, no frame.

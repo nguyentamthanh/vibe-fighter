@@ -269,6 +269,11 @@ def front_box(info: dict, frames: list[int], body_left: int) -> list[int] | None
     return None if x1 < 0 else [int(x0), int(y0), int(x1 - x0), int(y1 - y0)]
 
 
+def ts_str(s: str) -> str:
+    """A single-quoted TS string literal (labels like "Dragon's Regret" contain quotes)."""
+    return "'" + s.replace("\\", "\\\\").replace("'", "\\'") + "'"
+
+
 def action_ts(a: dict, visual, shift: int = 0, info: dict | None = None) -> str:
     """`shift` moves manifest boxes, authored for the standard 256px frame, to the centre of a wider frame.
     With the packed sheet's `info`, attack boxes are measured from the sprite (front_box) instead."""
@@ -281,7 +286,7 @@ def action_ts(a: dict, visual, shift: int = 0, info: dict | None = None) -> str:
         measured = front_box(info, frames, visual[0] + 8) if info else None
         return ts_rect(measured) if measured else box(fallback)
 
-    fields = [f"action: '{a['action']}'", f"label: '{a['label']}'", f"file: '{a['action']}.png'",
+    fields = [f"action: '{a['action']}'", f"label: {ts_str(a['label'])}", f"file: '{a['action']}.png'",
               f"frames: {info['frames'] if info else a['frames'] - len(a.get('dropFrames', []))}",
               f"frameRate: {a['fps']}",
               f"repeat: {a['repeat']}",
@@ -333,7 +338,7 @@ const {const}_ACTIONS: FighterActionSpec[] = [
 
 export const {const}_CHARACTER: CharacterDefinition = buildFighterCharacter({{
   id: {const}_CHARACTER_ID,
-  label: '{m['label']}',
+  label: {ts_str(m['label'])},
   assetRoot: '{asset_url}',
   anchorUsage: '{m['anchorUsage']}',
 {frame_width_line}  actions: {const}_ACTIONS

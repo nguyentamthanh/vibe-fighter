@@ -3,11 +3,11 @@ SAVE the result as: concepts/characters/2026-10-05-hac-long/raw/heavy-kick.png
 6 frames, 3x2 grid, 12 fps
 
 ----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
-Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards), draw a sprite sheet of the "Dragon Tail" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. A spinning low sweep kick along the ground toward the LEFT. The strike frames are 3 and 4.
-Frame 1: guard stance, weight shifting onto the back leg.
-Frame 2: wind-up, body turning, the kicking leg chambered.
-Frame 3: kick: the leg sweeping forward to the LEFT near the ground, a motion arc behind the leg.
-Frame 4: full extension: the leg sweeping forward to the LEFT near the ground.
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards), draw a sprite sheet of the "Dragon Tail" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. A spinning low sweep kick along the ground toward the RIGHT, aimed at the shins. The strike frames are 3 and 4.
+Frame 1: guard stance, weight shifting.
+Frame 2: wind-up, body turning, the attack chambered.
+Frame 3: strike: the leg sweeping forward to the RIGHT near the ground, a motion arc touching it.
+Frame 4: full extension: the leg sweeping forward to the RIGHT near the ground.
 Frame 5: follow-through.
 Frame 6: recovery to the guard stance.
 Draw the character small inside its cell: including the hair or sash, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, hair or sash may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

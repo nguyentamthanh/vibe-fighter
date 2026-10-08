@@ -151,6 +151,12 @@ export interface FighterCombat {
   specialKnockback: number;
   /** Per-hit hitstun (ms) of the meter special. */
   specialHitstun: number;
+  /** Percent of incoming damage ignored on clean hits (tougher fighters take less). */
+  defense: number;
+  /** Percent of this fighter's attack damage that still gets through a block (chip damage). */
+  guardBreak: number;
+  /** Special-meter gain rate in percent (100 = normal). */
+  meterGain: number;
 }
 
 /** A resolved single-attack profile derived from {@link FighterCombat}. */
@@ -160,6 +166,8 @@ export interface AttackProfile {
   damage: number;
   knockback: number;
   hitstun: number;
+  /** Percent of `damage` dealt even when the hit is blocked. */
+  guardBreak: number;
   /** True for the final hit of a special: launches harder for a combo finish. */
   finisher?: boolean;
 }

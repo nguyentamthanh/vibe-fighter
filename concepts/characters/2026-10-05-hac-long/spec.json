@@ -1,0 +1,32 @@
+{
+  "id": "hac-long",
+  "label": "Black Dragon",
+  "ts": "hacLong",
+  "const": "HAC_LONG",
+  "date": "2026-10-05",
+  "description": "a fierce kung-fu master called the Black Dragon: long black hair tied in a high topknot with loose strands, a short black goatee, a sleeveless black kung-fu jacket with gold frog buttons and a coiling gold dragon embroidered on it, a red sash belt, loose black trousers, black kung-fu shoes, black leather wrist guards",
+  "overflow": "hair or sash",
+  "portrait": "a cold, confident stare, one hand formed into a dragon claw beside the face with wisps of black smoke and a gold glow",
+  "portrait_bg": "dark charcoal with a faint gold glow",
+  "facing": "RIGHT",
+  "frameWidth": 320,
+  "moves": {
+    "idle": "low, coiled dragon-style kung-fu",
+    "block": "both forearms raised with hands in dragon claws",
+    "light_label": "Dragon Claw",
+    "light": "A fast clawed-hand swipe toward the LEFT at face height.",
+    "light_hit": "the dragon claw raking forward to the LEFT at face height",
+    "heavy_label": "Dragon Tail",
+    "heavy": "A spinning low sweep kick along the ground toward the LEFT, aimed at the shins.",
+    "heavy_hit": "the leg sweeping forward to the LEFT near the ground",
+    "charge_label": "Dragon Awakens",
+    "charge": "Black smoke swirls around him in the shape of a coiling dragon, with a gold glow on his fists (black and gold only).",
+    "special_label": "Dragon's Regret",
+    "special_fx": "Black smoke and a gold glow follow the fists (black and gold only).",
+    "hits": [
+      "a rushing dragon punch trailing black smoke",
+      "a rising uppercut with a gold glow",
+      "a double-palm strike releasing a large black-smoke dragon head with gold eyes"
+    ]
+  }
+}

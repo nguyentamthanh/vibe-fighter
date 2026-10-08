@@ -1,0 +1,33 @@
+{
+  "id": "asura-blade",
+  "label": "Asura Blade",
+  "ts": "asuraBlade",
+  "const": "ASURA_BLADE",
+  "date": "2026-10-08",
+  "description": "a young demon-king warrior (an asura): very long wild silver-white hair flowing back like flames, pale ash-grey skin, sharp glowing red eyes and a fierce arrogant grin, a bare muscular torso with dark crimson demon tattoo lines on the chest, shoulders and arms, a thick knotted dark crimson rope tied around the waist, a long layered deep crimson battle skirt over black trousers, black wrapped shins and bare feet, holding exactly TWO long demonic black sabers (Chinese dao), one in each hand, exactly as in the reference: in the raised back hand a curved scimitar-like blade with a few notches on the spine and a tip that curls into a hook; in the front hand a broad saber with a jagged serrated spine and a hooked tip; both black steel with glowing blood-red vein lines like cracks of lava, dark crimson edges, horned demon-skull cross-guards, black hilts with bone-white spikes and crimson-wrapped grips",
+  "overflow": "the two long sabers and the long hair",
+  "portrait": "a fierce arrogant grin and glowing red eyes, wild silver-white hair blowing, the two black demonic sabers with glowing red veins crossed in front of the bare tattooed chest",
+  "portrait_bg": "dark crimson and black smoke",
+  "facing": "RIGHT",
+  "frameWidth": 384,
+  "visualWidthCap": { "default": 120, "light-punch": 160, "heavy-kick": 170, "special": 190, "knockdown": 176 },
+  "moves": {
+    "idle": "wild, low, aggressive twin-saber",
+    "block": "both sabers crossed in an X",
+    "light_label": "Twin Fang",
+    "light": "A fast double slash: both sabers cut forward toward the LEFT at head height.",
+    "light_hit": "both sabers slashing forward to the LEFT at head height",
+    "heavy_label": "Ground Rend",
+    "heavy": "A low spinning sweep: the fighter drops low and both sabers cut along the ground toward the LEFT at ankle height.",
+    "heavy_hit": "both sabers sweeping low to the LEFT just above the ground",
+    "charge_label": "Asura Awakening",
+    "charge": "A dark grey smoky aura with a few white sparks curls around the body and both sabers (dark grey and white only, no colours).",
+    "special_label": "Asura Twin Crescent",
+    "special_fx": "Plain white slash arcs only (no colours), each arc touching its saber.",
+    "hits": [
+      "a huge wide horizontal slash with the front saber, a big white crescent arc touching the blade",
+      "a huge wide rising slash with the back saber, a big white crescent arc touching the blade",
+      "both sabers crossing in a giant X slash"
+    ]
+  }
+}

@@ -12,7 +12,16 @@ export interface StageDefinition {
   url: string;
   width: number;
   height: number;
+  /** Where the fighters' feet stand, as a fraction of the stage height (default 0.82). */
+  groundFraction?: number;
+  /** Animated layers drawn over the painted background (see `stageAmbience.ts`). */
+  ambience?: StageAmbienceKind[];
 }
+
+/** Procedural motion added on top of a static stage painting. */
+export type StageAmbienceKind = 'petals' | 'mist' | 'clouds' | 'rain' | 'embers' | 'neon';
+
+export const DEFAULT_GROUND_FRACTION = 0.82;
 
 /**
  * The computed placement of a stage when fit to a viewport: vertical-fit scale,
@@ -47,6 +56,46 @@ export const STAGE_DEFINITIONS: StageDefinition[] = [
     url: `${STAGE_ASSET_ROOT}/rooftop-sunset-stage.png`,
     width: 2048,
     height: 768
+  },
+  {
+    id: 'shaolin-temple',
+    label: 'Shaolin Temple',
+    key: 'shaolin-temple-stage',
+    url: `${STAGE_ASSET_ROOT}/shaolin-temple-stage.png`,
+    width: 1820,
+    height: 900,
+    groundFraction: 0.82,
+    ambience: ['petals', 'mist']
+  },
+  {
+    id: 'wudang-summit',
+    label: 'Wudang Summit',
+    key: 'wudang-summit-stage',
+    url: `${STAGE_ASSET_ROOT}/wudang-summit-stage.png`,
+    width: 1820,
+    height: 900,
+    groundFraction: 0.82,
+    ambience: ['clouds', 'mist']
+  },
+  {
+    id: 'night-market',
+    label: 'Night Market',
+    key: 'night-market-stage',
+    url: `${STAGE_ASSET_ROOT}/night-market-stage.png`,
+    width: 1820,
+    height: 900,
+    groundFraction: 0.82,
+    ambience: ['rain', 'neon']
+  },
+  {
+    id: 'dragon-lair',
+    label: "Dragon's Lair",
+    key: 'dragon-lair-stage',
+    url: `${STAGE_ASSET_ROOT}/dragon-lair-stage.png`,
+    width: 1820,
+    height: 900,
+    groundFraction: 0.82,
+    ambience: ['embers']
   }
 ];
 

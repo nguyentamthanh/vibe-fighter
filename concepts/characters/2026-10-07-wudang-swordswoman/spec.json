@@ -1,0 +1,32 @@
+{
+  "id": "wudang-swordswoman",
+  "label": "Wudang Swordswoman",
+  "ts": "wudangSwordswoman",
+  "const": "WUDANG_SWORDSWOMAN",
+  "date": "2026-10-07",
+  "description": "a graceful young Wudang swordswoman: long black hair in a high bun held by a jade hairpin with a few loose strands, a calm determined face, a white and pale-blue Taoist robe with wide flowing sleeves and a blue sash belt, white trousers, black cloth shoes, holding a straight double-edged jian sword with a silver blade and a long blue tassel on the hilt",
+  "overflow": "the sword blade, the sword tassel or the wide sleeves",
+  "portrait": "a calm, piercing gaze, the jian sword held upright beside the face with its blade catching the light and the blue tassel flowing",
+  "portrait_bg": "misty pale blue mountains at dawn",
+  "frameWidth": 384,
+  "visualWidthCap": { "default": 120, "light-punch": 150, "heavy-kick": 170, "special": 190, "knockdown": 176 },
+  "moves": {
+    "idle": "light, flowing tai chi sword",
+    "block": "the sword held flat and horizontal",
+    "light_label": "Swift Thrust",
+    "light": "A fast straight sword thrust toward the LEFT at chest height, the arm and blade fully extended.",
+    "light_hit": "the sword thrust straight forward to the LEFT at chest height",
+    "heavy_label": "Low Sweep Cut",
+    "heavy": "A wide low sword slash along the ground toward the LEFT, aimed at the shins, the body crouched low.",
+    "heavy_hit": "the sword slashing low to the LEFT just above the ground",
+    "charge_label": "Cloud Breath",
+    "charge": "White wind ribbons and a pale blue glow swirl around her and along the blade (white and pale blue only).",
+    "special_label": "Cloud Hand Sword",
+    "special_fx": "White wind ribbons and pale blue light trail the sword (white and pale blue only).",
+    "hits": [
+      "a rising diagonal sword slash with a white wind trail",
+      "a spinning horizontal sword slash with a pale blue arc",
+      "a lunging sword thrust releasing a large spiral of white wind"
+    ]
+  }
+}

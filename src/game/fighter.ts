@@ -237,6 +237,27 @@ export class Fighter {
     return this.groundY;
   }
 
+  /** The action of the animation playing now (`special-charge`, `special`, ...), or '' when none. */
+  get currentAction(): string {
+    return this.defeated ? 'knockdown' : (this.currentAnimation()?.action ?? '');
+  }
+
+  /** The frame index of the animation playing now. */
+  get currentFrame(): number {
+    const animation = this.currentAnimation();
+    return animation ? this.currentFrameIndex(animation) : 0;
+  }
+
+  /** World position of the middle of the sprite (chest height), for effects that leave the body. */
+  get bodyCenter(): Phaser.Math.Vector2 {
+    return new Phaser.Math.Vector2(this.sprite.x, this.sprite.y - this.sprite.displayHeight * this.sprite.originY * 0.5);
+  }
+
+  /** The profile of one special hit (used by special projectiles). */
+  get specialProfile(): AttackProfile {
+    return getAttackProfile(this.combat(), 'special');
+  }
+
   /** The display scale applied to the sprite. */
   get displayScale(): number {
     return this.appliedScale;
@@ -281,7 +302,7 @@ export class Fighter {
       return;
     }
 
-    this.gainMeter(blocked ? METER_GAIN_ON_BLOCK : METER_GAIN_ON_HIT);
+    this.gainScaledMeter(blocked ? METER_GAIN_ON_BLOCK : METER_GAIN_ON_HIT);
   }
 
   /**
@@ -289,7 +310,12 @@ export class Fighter {
    * @param blocked - Whether the incoming attack was guarded.
    */
   registerDefense(blocked: boolean): void {
-    this.gainMeter(blocked ? METER_GAIN_ON_BLOCK : METER_GAIN_ON_TAKE);
+    this.gainScaledMeter(blocked ? METER_GAIN_ON_BLOCK : METER_GAIN_ON_TAKE);
+  }
+
+  /** Adds meter scaled by the fighter's `meterGain` rate. */
+  private gainScaledMeter(amount: number): void {
+    this.gainMeter((amount * this.combat().meterGain) / 100);
   }
 
   /** Tops the special meter to full (used by the playground's debug fill toggle). */
@@ -474,8 +500,9 @@ export class Fighter {
   }
 
   /**
-   * Applies a connected hit: blocked hits deal no damage and apply short
-   * blockstun + light pushback; unblocked hits deal damage, hitstun, and
+   * Applies a connected hit: blocked hits apply short blockstun + light pushback
+   * and only the attacker's chip damage (`guardBreak`), which can never KO;
+   * unblocked hits deal damage reduced by this fighter's `defense`, hitstun, and
    * knockback, triggering a knockdown when health reaches zero.
    * @param profile - The attack profile that landed.
    * @param attackerFacing - The attacker's facing (push direction).
@@ -487,6 +514,8 @@ export class Fighter {
     }
 
     if (blocked) {
+      const chip = Math.round((profile.damage * profile.guardBreak) / 100);
+      this.health = Math.max(Math.min(this.health, 1), this.health - chip);
       this.knockbackVel = attackerFacing * profile.knockback * 0.35;
       this.hitstunTimer = Math.max(this.hitstunTimer, BLOCKSTUN_SECONDS);
       this.stunIsBlock = true;
@@ -495,7 +524,8 @@ export class Fighter {
       return;
     }
 
-    this.health = Math.max(0, this.health - profile.damage);
+    const damage = Math.max(1, Math.round((profile.damage * (100 - this.combat().defense)) / 100));
+    this.health = Math.max(0, this.health - damage);
     this.knockbackVel = attackerFacing * profile.knockback;
 
     if (this.health <= 0) {

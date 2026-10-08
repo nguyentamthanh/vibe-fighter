@@ -1,0 +1,16 @@
+ATTACH the reference image: concepts/characters/2026-10-07-wudang-swordswoman/wudang-swordswoman-ref.png
+SAVE the result as: concepts/characters/2026-10-07-wudang-swordswoman/raw/special.png
+9 frames, 3x3 grid, 16 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a graceful young Wudang swordswoman: long black hair in a high bun held by a jade hairpin with a few loose strands, a calm determined face, a white and pale-blue Taoist robe with wide flowing sleeves and a blue sash belt, white trousers, black cloth shoes, holding a straight double-edged jian sword with a silver blade and a long blue tassel on the hilt), draw a sprite sheet of the "Cloud Hand Sword" animation for a 2D fighting game: 9 frames in a 3x3 grid (3 columns, 3 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces LEFT in a 3/4 side view. IMPORTANT: NINE frames in a 3x3 grid (3 columns and 3 ROWS). A three-hit combo toward the LEFT. The strike frames are 3, 5 and 7; frames 4, 6 and 8 are transitions. White wind ribbons and pale blue light trail the sword (white and pale blue only). Effects always touch the fighter or weapon.
+Frame 1: wind-up, aura around the body.
+Frame 2: rushing forward to the left.
+Frame 3: first hit: a rising diagonal sword slash with a white wind trail toward the LEFT.
+Frame 4: transition, pulling back.
+Frame 5: second hit: a spinning horizontal sword slash with a pale blue arc toward the LEFT.
+Frame 6: transition, gathering power.
+Frame 7: third hit, the finisher: a lunging sword thrust releasing a large spiral of white wind toward the LEFT, a large burst.
+Frame 8: follow-through.
+Frame 9: recovery to the guard stance.
+Draw the character small inside its cell: including the the sword blade, the sword tassel or the wide sleeves, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, the sword blade, the sword tassel or the wide sleeves may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

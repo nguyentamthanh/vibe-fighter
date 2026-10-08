@@ -15,3 +15,9 @@ concepts/**/raw/
 concepts/**/work/
 concepts/**/idle-frames/
 __pycache__/
+
+# Preview images written by the vibe-fighter-dev skill helpers
+concepts/_previews/
+
+# Local Python environment for the sprite pipeline
+.venv/

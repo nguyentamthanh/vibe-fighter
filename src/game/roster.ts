@@ -9,9 +9,12 @@ const SELECTABLE_FIGHTER_IDS = [
   'kunoichi',
   'muay-thai',
   'shaolin-monk',
+  'wudang-swordswoman',
+  'monkey-king',
+  'asura-blade',
   'hac-long'
 ];
 
-export const SELECTABLE_ROSTER: CharacterDefinition[] = FIGHTER_CHARACTER_DEFINITIONS.filter((character) =>
-  SELECTABLE_FIGHTER_IDS.includes(character.id)
+export const SELECTABLE_ROSTER: CharacterDefinition[] = SELECTABLE_FIGHTER_IDS.flatMap((id) =>
+  FIGHTER_CHARACTER_DEFINITIONS.filter((character) => character.id === id)
 );

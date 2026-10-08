@@ -171,11 +171,46 @@ export interface SelectionCardConfig {
   imageMaxSize?: number;
   /** Vertical offset of the image centre from the card centre. */
   imageOffsetY?: number;
+  /**
+   * Draw the title inside a name plate along the card's bottom edge (height in
+   * px). The title shrinks to fit the plate. Without it the title floats under the image.
+   */
+  namePlateHeight?: number;
   onClick?: () => void;
   onHover?: () => void;
 }
 
 const CARD_BASE_STROKE = 0x334155;
+
+/**
+ * Shrinks a text object's font until it fits a box. Single-line mode tries one
+ * line first and only wraps if even the smallest font is too wide; `wrap` mode
+ * (paragraphs) wraps at `maxWidth` and shrinks until the height fits.
+ * @param text - The text object (its current font size is the largest allowed).
+ * @param maxWidth - The width it must fit in (px).
+ * @param maxHeight - The height it must fit in (px).
+ * @param minFontSize - The smallest font size to try (px).
+ * @param wrap - Whether the text is a wrapped paragraph.
+ */
+export function fitTextToBox(
+  text: Phaser.GameObjects.Text,
+  maxWidth: number,
+  maxHeight: number,
+  minFontSize = 9,
+  wrap = false
+): void {
+  let size = parseInt(String(text.style.fontSize), 10) || 16;
+
+  text.setWordWrapWidth(wrap ? maxWidth : null, true);
+  while (size > minFontSize && (text.width > maxWidth || text.height > maxHeight)) {
+    size -= 1;
+    text.setFontSize(size);
+  }
+
+  if (text.width > maxWidth) {
+    text.setWordWrapWidth(maxWidth, true);
+  }
+}
 
 /**
  * Create a selectable card: a framed panel with an optional image, a title and
@@ -201,16 +236,28 @@ export function createSelectionCard(scene: Phaser.Scene, config: SelectionCardCo
   }
 
   const subtitleY = config.height / 2 - 20;
-  const titleY = config.subtitle ? subtitleY - 26 : subtitleY;
+  const plateHeight = config.namePlateHeight ?? 0;
+  const titleY = plateHeight > 0 ? config.height / 2 - plateHeight / 2 : config.subtitle ? subtitleY - 26 : subtitleY;
+
+  if (plateHeight > 0) {
+    const plate = scene.add
+      .rectangle(0, titleY, config.width - 8, plateHeight - 6, 0x020617, 0.9)
+      .setStrokeStyle(1, 0x475569, 1);
+    children.push(plate);
+  }
 
   const title = scene.add
     .text(0, titleY, config.title, {
       color: '#f8fafc',
       fontFamily: 'monospace',
-      fontSize: '20px',
+      fontSize: plateHeight > 0 ? `${Math.min(20, Math.round(plateHeight * 0.55))}px` : '20px',
+      fontStyle: plateHeight > 0 ? 'bold' : 'normal',
       align: 'center'
     })
     .setOrigin(0.5);
+  if (plateHeight > 0) {
+    fitTextToBox(title, config.width - 20, plateHeight - 8);
+  }
   children.push(title);
 
   if (config.subtitle) {

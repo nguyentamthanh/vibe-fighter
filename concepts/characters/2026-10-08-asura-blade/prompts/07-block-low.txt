@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-08-asura-blade/asura-blade-ref.png
+SAVE the result as: concepts/characters/2026-10-08-asura-blade/raw/block-low.png
+6 frames, 3x2 grid, 10 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a young demon-king warrior (an asura): very long wild silver-white hair flowing back like flames, pale ash-grey skin, sharp glowing red eyes and a fierce arrogant grin, a bare muscular torso with dark crimson demon tattoo lines on the chest, shoulders and arms, a thick knotted dark crimson rope tied around the waist, a long layered deep crimson battle skirt over black trousers, black wrapped shins and bare feet, holding exactly TWO long demonic black sabers (Chinese dao), one in each hand, exactly as in the reference: in the raised back hand a curved scimitar-like blade with a few notches on the spine and a tip that curls into a hook; in the front hand a broad saber with a jagged serrated spine and a hooked tip; both black steel with glowing blood-red vein lines like cracks of lava, dark crimson edges, horned demon-skull cross-guards, black hilts with bone-white spikes and crimson-wrapped grips), draw a sprite sheet of the "Block Low" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. Feet stay on the ground line. Goes from standing to a LOW crouching block held from frame 3 onward.
+Frame 1: guard stance, starting to crouch.
+Frame 2: crouching low, the guard lowering in front of the knees.
+Frame 3: block held: deep low crouch kneeling on one knee, guarding the shins, body only about 60 percent as tall as in frame 1.
+Frame 4: same low crouching block.
+Frame 5: same low crouching block.
+Frame 6: same low crouching block.
+Draw the character small inside its cell: including the the two long sabers and the long hair, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, the two long sabers and the long hair may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

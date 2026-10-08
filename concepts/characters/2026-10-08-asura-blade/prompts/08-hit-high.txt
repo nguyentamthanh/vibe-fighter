@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-08-asura-blade/asura-blade-ref.png
+SAVE the result as: concepts/characters/2026-10-08-asura-blade/raw/hit-high.png
+6 frames, 3x2 grid, 12 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: a young demon-king warrior (an asura): very long wild silver-white hair flowing back like flames, pale ash-grey skin, sharp glowing red eyes and a fierce arrogant grin, a bare muscular torso with dark crimson demon tattoo lines on the chest, shoulders and arms, a thick knotted dark crimson rope tied around the waist, a long layered deep crimson battle skirt over black trousers, black wrapped shins and bare feet, holding exactly TWO long demonic black sabers (Chinese dao), one in each hand, exactly as in the reference: in the raised back hand a curved scimitar-like blade with a few notches on the spine and a tip that curls into a hook; in the front hand a broad saber with a jagged serrated spine and a hooked tip; both black steel with glowing blood-red vein lines like cracks of lava, dark crimson edges, horned demon-skull cross-guards, black hilts with bone-white spikes and crimson-wrapped grips), draw a sprite sheet of the "Hit High" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. Struck in the face from the RIGHT, recoiling backward to the LEFT; feet stay near the ground line.
+Frame 1: impact: head snaps back, eyes shut.
+Frame 2: maximum recoil: torso bent far back, one foot sliding.
+Frame 3: still leaning back, grimacing.
+Frame 4: recovering, weight returning forward.
+Frame 5: almost recovered, pained face.
+Frame 6: back in the guard stance with a pained face.
+Draw the character small inside its cell: including the the two long sabers and the long hair, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, the two long sabers and the long hair may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.

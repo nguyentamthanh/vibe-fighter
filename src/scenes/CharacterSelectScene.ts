@@ -1,9 +1,18 @@
 import * as Phaser from 'phaser';
 
 import { AUDIO_KEYS, playAudioCue } from '../game/core/audio';
-import { createMenuBackdrop } from '../game/menuBackdrop';
+import { getFighterCombat, getFighterStats } from '../game/fighterConfig';
+import { getFighterLore } from '../game/lore';
+import { createMenuBackdrop, DISPLAY_FONT } from '../game/menuBackdrop';
+import {
+  computeFighterRatings,
+  describeFighterTraits,
+  getFighterPlaystyle,
+  RATING_MAX,
+  type FighterRatings
+} from '../game/playstyle';
 import { SELECTABLE_ROSTER } from '../game/roster';
-import { createSelectionCard, type SelectionCard } from '../game/ui';
+import { createSelectionCard, fitTextToBox, type SelectionCard } from '../game/ui';
 import { SCENE_KEYS, type MatchMode } from '../game/types';
 import { BaseScene } from './BaseScene';
 
@@ -12,21 +21,59 @@ interface CharacterSelectData {
   stageId: string;
 }
 
+interface Box {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 const P1_COLOR = 0x38bdf8;
 const P2_COLOR = 0xf43f5e;
 const CARD_MAX_WIDTH = 300;
 const CARD_ASPECT = 384 / 300;
-const CARD_GAP = 48;
-const CARD_MARGIN = 40;
-// Vertical band for the cards: below the heading, above the footer hint.
-const CARD_AREA_TOP = 150;
-const CARD_AREA_BOTTOM = 70;
+const CARD_GAP = 20;
+const MARGIN = 40;
+// Everything sits between the heading (title + subtitle) and the footer hint.
+const CONTENT_TOP = 130;
+const CONTENT_BOTTOM = 56;
+// Landscape: info panel on the right of the card grid. Portrait: below it.
+const PANEL_SIDE_WIDTH = 360;
+const PANEL_BOTTOM_HEIGHT = 440;
+const PANEL_GAP = 24;
+const PANEL_PADDING = 18;
+// Largest font sizes of the panel texts that shrink to fit.
+const NAME_FONT = 22;
+const ORIGIN_FONT = 15;
+const BIO_FONT = 15;
+
+const RATING_ROWS: Array<{ key: keyof FighterRatings; label: string; color: number }> = [
+  { key: 'power', label: 'POWER', color: 0xef4444 },
+  { key: 'defense', label: 'DEFENSE', color: 0x38bdf8 },
+  { key: 'speed', label: 'SPEED', color: 0x22c55e },
+  { key: 'special', label: 'SPECIAL', color: 0xfacc15 }
+];
 
 interface PlayerCursor {
   index: number;
   locked: boolean;
+  color: number;
   outline: Phaser.GameObjects.Rectangle;
   label: Phaser.GameObjects.Text;
+}
+
+/** The info panel that describes the highlighted fighter: story, play style and ratings. */
+interface InfoPanel {
+  box: Box;
+  background: Phaser.GameObjects.Rectangle;
+  name: Phaser.GameObjects.Text;
+  origin: Phaser.GameObjects.Text;
+  archetype: Phaser.GameObjects.Text;
+  tip: Phaser.GameObjects.Text;
+  ratingLabels: Phaser.GameObjects.Text[];
+  bars: Phaser.GameObjects.Graphics;
+  traits: Phaser.GameObjects.Text;
+  bio: Phaser.GameObjects.Text;
 }
 
 /**
@@ -34,6 +81,8 @@ interface PlayerCursor {
  * own cursor (P1 = WASD, P2 = arrows) and cannot land on the other's pick. In
  * 1vCPU the player picks freely and the CPU then auto-selects a different
  * fighter. Each confirmation plays a lock-in flash before the match starts.
+ * The info panel shows the highlighted fighter's story, play style and 1–5
+ * ratings so every pick reads differently.
  */
 export class CharacterSelectScene extends BaseScene {
   private mode: MatchMode = '1v1';
@@ -45,6 +94,7 @@ export class CharacterSelectScene extends BaseScene {
   private p1!: PlayerCursor;
   private p2!: PlayerCursor;
   private transitioning = false;
+  private panel?: InfoPanel;
 
   constructor() {
     super(SCENE_KEYS.CharacterSelect);
@@ -68,7 +118,9 @@ export class CharacterSelectScene extends BaseScene {
       this.mode === '1v1' ? 'P1 = WASD + Space   •   P2 = Arrows + Enter' : 'WASD / Arrows to choose • Enter to confirm'
     );
 
-    this.buildCards();
+    const { cardArea, panelArea } = this.computeLayout();
+    this.buildCards(cardArea);
+    this.panel = this.buildPanel(panelArea);
     this.buildCursors();
     this.registerInput();
 
@@ -77,23 +129,51 @@ export class CharacterSelectScene extends BaseScene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.cards.forEach((card) => card.destroy());
       this.cards = [];
+      this.panel = undefined;
     });
   }
 
   /**
-   * Lays the roster out on a grid, picking the column count that gives the
-   * largest card that fits both the screen width and the band between the
-   * heading and the footer (ties prefer fewer columns, i.e. balanced rows).
-   * Cursor order stays the roster order.
+   * Splits the screen between the card grid and the info panel: side by side on
+   * a wide screen, stacked on a tall one.
    */
-  private buildCards(): void {
-    const { centerX, width, height } = this.cameras.main;
+  private computeLayout(): { cardArea: Box; panelArea: Box } {
+    const { width, height } = this.cameras.main;
+    const contentHeight = height - CONTENT_TOP - CONTENT_BOTTOM;
+
+    if (width >= height) {
+      const panelArea = {
+        x: width - MARGIN - PANEL_SIDE_WIDTH,
+        y: CONTENT_TOP,
+        width: PANEL_SIDE_WIDTH,
+        height: contentHeight
+      };
+      const cardArea = { x: MARGIN, y: CONTENT_TOP, width: panelArea.x - PANEL_GAP - MARGIN, height: contentHeight };
+      return { cardArea, panelArea };
+    }
+
+    const panelArea = {
+      x: MARGIN,
+      y: height - CONTENT_BOTTOM - PANEL_BOTTOM_HEIGHT,
+      width: width - 2 * MARGIN,
+      height: PANEL_BOTTOM_HEIGHT
+    };
+    const cardArea = { x: MARGIN, y: CONTENT_TOP, width: width - 2 * MARGIN, height: panelArea.y - PANEL_GAP - CONTENT_TOP };
+    return { cardArea, panelArea };
+  }
+
+  /**
+   * Lays the roster out on a grid inside `area`, picking the column count that
+   * gives the largest card (ties prefer fewer columns, i.e. balanced rows).
+   * Cursor order stays the roster order.
+   * @param area - The box the grid must fit in.
+   */
+  private buildCards(area: Box): void {
     const roster = SELECTABLE_ROSTER;
-    const areaHeight = height - CARD_AREA_TOP - CARD_AREA_BOTTOM;
     const fitCard = (columns: number): number => {
       const rowCount = Math.ceil(roster.length / columns);
-      const byWidth = (width - 2 * CARD_MARGIN - CARD_GAP * (columns - 1)) / columns;
-      const byHeight = (areaHeight - CARD_GAP * (rowCount - 1)) / rowCount / CARD_ASPECT;
+      const byWidth = (area.width - CARD_GAP * (columns - 1)) / columns;
+      const byHeight = (area.height - CARD_GAP * (rowCount - 1)) / rowCount / CARD_ASPECT;
       return Math.floor(Math.min(CARD_MAX_WIDTH, byWidth, byHeight));
     };
     let columns = 1;
@@ -106,9 +186,11 @@ export class CharacterSelectScene extends BaseScene {
 
     this.cardWidth = fitCard(columns);
     this.cardHeight = Math.round(this.cardWidth * CARD_ASPECT);
-    const cardScale = this.cardWidth / CARD_MAX_WIDTH;
+    const plateHeight = Phaser.Math.Clamp(Math.round(this.cardWidth * 0.2), 24, 44);
+    const imageSize = Math.min(this.cardWidth - 14, this.cardHeight - plateHeight - 14);
+    const centerX = area.x + area.width / 2;
     const totalHeight = rows * this.cardHeight + (rows - 1) * CARD_GAP;
-    const firstY = CARD_AREA_TOP + (areaHeight - totalHeight) / 2 + this.cardHeight / 2;
+    const firstY = area.y + (area.height - totalHeight) / 2 + this.cardHeight / 2;
 
     roster.forEach((character, index) => {
       const row = Math.floor(index / columns);
@@ -125,14 +207,136 @@ export class CharacterSelectScene extends BaseScene {
         height: this.cardHeight,
         title: character.label,
         texture: this.textures.exists(character.portrait.key) ? character.portrait.key : undefined,
-        imageMaxSize: this.cardWidth - 36,
-        imageOffsetY: Math.round(-34 * cardScale),
+        imageMaxSize: imageSize,
+        imageOffsetY: Math.round(-plateHeight / 2),
+        namePlateHeight: plateHeight,
         onHover: () => this.hoverCard(index),
         onClick: () => this.clickCard(index)
       });
 
       this.cards.push(card);
     });
+  }
+
+  /**
+   * Creates the info panel objects; their text and positions are filled in by {@link updatePanel}.
+   * @param box - Where the panel goes.
+   */
+  private buildPanel(box: Box): InfoPanel {
+    const depth = 30;
+    const textWidth = box.width - 2 * PANEL_PADDING;
+    const text = (style: Phaser.Types.GameObjects.Text.TextStyle): Phaser.GameObjects.Text =>
+      this.add
+        .text(0, 0, '', { stroke: '#020617', strokeThickness: 3, ...style })
+        .setOrigin(0, 0)
+        .setDepth(depth + 1);
+
+    const background = this.add
+      .rectangle(box.x + box.width / 2, box.y + box.height / 2, box.width, box.height, 0x0f172a, 0.88)
+      .setStrokeStyle(2, P1_COLOR, 1)
+      .setDepth(depth);
+
+    return {
+      box,
+      background,
+      name: text({ color: '#fde68a', fontFamily: DISPLAY_FONT, fontSize: `${NAME_FONT}px`, strokeThickness: 5 }),
+      origin: text({ color: '#94a3b8', fontFamily: 'monospace', fontSize: `${ORIGIN_FONT}px` }),
+      archetype: text({
+        color: '#020617',
+        fontFamily: DISPLAY_FONT,
+        fontSize: '15px',
+        strokeThickness: 0,
+        padding: { x: 10, y: 5 }
+      }),
+      tip: text({ color: '#f8fafc', fontFamily: 'monospace', fontSize: '16px', wordWrap: { width: textWidth } }),
+      ratingLabels: RATING_ROWS.map((row) =>
+        text({ color: colorToCss(row.color), fontFamily: 'monospace', fontSize: '15px', fontStyle: 'bold' })
+      ),
+      bars: this.add.graphics().setDepth(depth + 1),
+      traits: text({
+        color: '#fde68a',
+        fontFamily: 'monospace',
+        fontSize: '14px',
+        lineSpacing: 4,
+        wordWrap: { width: textWidth }
+      }),
+      bio: text({ color: '#cbd5e1', fontFamily: 'monospace', fontSize: `${BIO_FONT}px`, wordWrap: { width: textWidth } })
+    };
+  }
+
+  /**
+   * Fills the info panel with the fighter under a cursor, stacking each block
+   * under the previous one and shrinking the bio if it would overflow.
+   * @param cursor - The cursor whose fighter to describe.
+   */
+  private updatePanel(cursor: PlayerCursor): void {
+    const panel = this.panel;
+    const character = SELECTABLE_ROSTER[cursor.index];
+    if (!panel || !character) {
+      return;
+    }
+
+    const lore = getFighterLore(character.id);
+    const playstyle = getFighterPlaystyle(character.id);
+    const tuning = this.app.debugStore.getState().fighterPlayground;
+    const combat = getFighterCombat(tuning, character.id);
+    const ratings = computeFighterRatings(getFighterStats(tuning, character.id), combat, playstyle?.specialHits);
+    const { box } = panel;
+    const left = box.x + PANEL_PADDING;
+    const textWidth = box.width - 2 * PANEL_PADDING;
+    const bottom = box.y + box.height - PANEL_PADDING;
+    let y = box.y + PANEL_PADDING;
+
+    panel.background.setStrokeStyle(2, cursor.color, 1);
+
+    panel.name.setText((lore?.name ?? character.label).toUpperCase()).setFontSize(NAME_FONT);
+    fitTextToBox(panel.name, textWidth, 56, 11);
+    panel.name.setPosition(left, y);
+    y += panel.name.height + 6;
+
+    panel.origin.setText(lore ? `${lore.origin}  •  ${lore.style}` : '').setFontSize(ORIGIN_FONT);
+    fitTextToBox(panel.origin, textWidth, 36, 10);
+    panel.origin.setPosition(left, y);
+    y += panel.origin.height + 12;
+
+    panel.archetype
+      .setText((playstyle?.archetype ?? 'Fighter').toUpperCase())
+      .setBackgroundColor(colorToCss(playstyle?.color ?? 0x94a3b8))
+      .setPosition(left, y);
+    y += panel.archetype.height + 8;
+
+    panel.tip.setText(playstyle?.tip ?? '').setPosition(left, y);
+    y += panel.tip.height + 12;
+
+    const labelWidth = 92;
+    const segmentGap = 5;
+    const segmentWidth = Math.min(40, (textWidth - labelWidth - segmentGap * (RATING_MAX - 1)) / RATING_MAX);
+    const segmentHeight = 14;
+    panel.bars.clear();
+    RATING_ROWS.forEach((row, rowIndex) => {
+      const value = ratings[row.key];
+      const label = panel.ratingLabels[rowIndex];
+      label.setText(row.label).setPosition(left, y);
+      const barY = y + (label.height - segmentHeight) / 2;
+
+      for (let segment = 0; segment < RATING_MAX; segment++) {
+        const segmentX = left + labelWidth + segment * (segmentWidth + segmentGap);
+        const filled = segment < value;
+        panel.bars.fillStyle(filled ? row.color : 0x1e293b, filled ? 1 : 0.9);
+        panel.bars.fillRect(segmentX, barY, segmentWidth, segmentHeight);
+        panel.bars.lineStyle(1, 0x020617, 1);
+        panel.bars.strokeRect(segmentX, barY, segmentWidth, segmentHeight);
+      }
+
+      y += Math.max(label.height, segmentHeight) + 10;
+    });
+
+    const traits = describeFighterTraits(combat);
+    panel.traits.setText(traits.map((trait) => `+ ${trait}`).join('\n')).setPosition(left, y + 2);
+    y += traits.length > 0 ? panel.traits.height + 16 : 8;
+
+    panel.bio.setText(lore?.bio ?? '').setFontSize(BIO_FONT).setPosition(left, y);
+    fitTextToBox(panel.bio, textWidth, Math.max(16, bottom - y), 10, true);
   }
 
   private buildCursors(): void {
@@ -147,11 +351,12 @@ export class CharacterSelectScene extends BaseScene {
 
     this.refreshCursor(this.p1);
     this.refreshCursor(this.p2);
+    this.updatePanel(this.p1);
   }
 
   private createCursor(label: string, color: number, index: number): PlayerCursor {
     const outline = this.add
-      .rectangle(0, 0, this.cardWidth + 16, this.cardHeight + 16, color, 0)
+      .rectangle(0, 0, this.cardWidth + 12, this.cardHeight + 12, color, 0)
       .setStrokeStyle(4, color, 1)
       .setDepth(20);
 
@@ -160,13 +365,14 @@ export class CharacterSelectScene extends BaseScene {
         color: '#020617',
         backgroundColor: colorToCss(color),
         fontFamily: 'monospace',
-        fontSize: '16px',
-        padding: { x: 8, y: 3 }
+        fontSize: '14px',
+        fontStyle: 'bold',
+        padding: { x: 6, y: 2 }
       })
-      .setOrigin(0.5)
+      .setOrigin(0, 0)
       .setDepth(21);
 
-    return { index, locked: false, outline, label: text };
+    return { index, locked: false, color, outline, label: text };
   }
 
   private refreshCursor(cursor: PlayerCursor): void {
@@ -176,8 +382,14 @@ export class CharacterSelectScene extends BaseScene {
     }
 
     cursor.outline.setPosition(position.x, position.y);
-    cursor.outline.setStrokeStyle(cursor.locked ? 7 : 4, cursor.outline.strokeColor, 1);
-    cursor.label.setPosition(position.x, position.y - this.cardHeight / 2 - 18);
+    cursor.outline.setStrokeStyle(cursor.locked ? 7 : 4, cursor.color, 1);
+    // The tag sits inside the card's top-left corner so it never covers the row above.
+    cursor.label.setPosition(position.x - this.cardWidth / 2 + 4, position.y - this.cardHeight / 2 + 4);
+
+    // The panel follows the player who moved (the CPU's pick in 1vCPU does not replace the player's panel).
+    if (cursor === this.p1 || this.mode === '1v1') {
+      this.updatePanel(cursor);
+    }
   }
 
   private registerInput(): void {

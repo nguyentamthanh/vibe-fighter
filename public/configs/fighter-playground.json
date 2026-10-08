@@ -25,34 +25,5 @@
       "gravity": 2300,
       "scale": 1.6
     }
-  },
-  "combat": {
-    "red-brawler": {
-      "maxHealth": 100,
-      "highDamage": 7,
-      "highKnockback": 180,
-      "highHitstun": 280,
-      "lowDamage": 12,
-      "lowKnockback": 340,
-      "lowHitstun": 440
-    },
-    "green-boxer": {
-      "maxHealth": 100,
-      "highDamage": 9,
-      "highKnockback": 220,
-      "highHitstun": 280,
-      "lowDamage": 10,
-      "lowKnockback": 300,
-      "lowHitstun": 440
-    },
-    "jiujitsu-fighter": {
-      "maxHealth": 110,
-      "highDamage": 6,
-      "highKnockback": 180,
-      "highHitstun": 280,
-      "lowDamage": 14,
-      "lowKnockback": 380,
-      "lowHitstun": 480
-    }
   }
 }

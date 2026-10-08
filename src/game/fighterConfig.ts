@@ -6,6 +6,10 @@ import { VIKING_BERSERKER_CHARACTER_ID } from './vikingBerserker';
 import { KUNOICHI_CHARACTER_ID } from './kunoichi';
 import { MUAY_THAI_CHARACTER_ID } from './muayThai';
 import { SHAOLIN_MONK_CHARACTER_ID } from './shaolinMonk';
+import { HAC_LONG_CHARACTER_ID } from './hacLong';
+import { WUDANG_SWORDSWOMAN_CHARACTER_ID } from './wudangSwordswoman';
+import { MONKEY_KING_CHARACTER_ID } from './monkeyKing';
+import { ASURA_BLADE_CHARACTER_ID } from './asuraBlade';
 import type {
   AttackKind,
   AttackProfile,
@@ -45,7 +49,15 @@ const FIGHTER_STAT_OVERRIDES: Record<string, Partial<FighterStats>> = {
   // Pressure fighter: steps in quickly, short reach.
   [MUAY_THAI_CHARACTER_ID]: { walkSpeed: 250, jump: 1000 },
   // Agile: high, floaty jump.
-  [SHAOLIN_MONK_CHARACTER_ID]: { airDrift: 210, jump: 1060 }
+  [SHAOLIN_MONK_CHARACTER_ID]: { airDrift: 210, jump: 1060 },
+  // The tournament host: steady pace.
+  [HAC_LONG_CHARACTER_ID]: { walkSpeed: 240 },
+  // Light on her feet: quick steps and a slightly floaty jump.
+  [WUDANG_SWORDSWOMAN_CHARACTER_ID]: { walkSpeed: 240, airDrift: 210, jump: 1020 },
+  // Acrobat: quick feet and the highest jump in the roster.
+  [MONKEY_KING_CHARACTER_ID]: { walkSpeed: 245, airDrift: 220, jump: 1100 },
+  // Reckless: rushes in fast.
+  [ASURA_BLADE_CHARACTER_ID]: { walkSpeed: 255, airDrift: 220, jump: 1040 }
 };
 
 /**
@@ -83,52 +95,117 @@ export const DEFAULT_FIGHTER_COMBAT: FighterCombat = {
   lowHitstun: 440,
   specialDamage: 6,
   specialKnockback: 150,
-  specialHitstun: 240
+  specialHitstun: 240,
+  defense: 0,
+  guardBreak: 0,
+  meterGain: 100
 };
 
 /**
- * Per-character combat balance. Tunable in the playground debug panel and
- * persisted alongside the movement stats.
+ * Per-character combat balance: each fighter leans on a different strength so the
+ * picks play differently (archetypes and ratings in `playstyle.ts`). Tunable in the
+ * playground debug panel and persisted alongside the movement stats.
  */
 const FIGHTER_COMBAT_OVERRIDES: Record<string, Partial<FighterCombat>> = {
+  // All-rounder: the baseline every other fighter is measured against.
   [RED_BRAWLER_CHARACTER_ID]: { specialDamage: 7, specialKnockback: 170 },
-  [GREEN_BOXER_CHARACTER_ID]: { highDamage: 9, highKnockback: 220, lowDamage: 10, lowKnockback: 300 },
+  // Rushdown: hard, fast jabs that stun long enough to chain, and quick meter from combos.
+  [GREEN_BOXER_CHARACTER_ID]: {
+    defense: 5,
+    highDamage: 10,
+    highKnockback: 220,
+    highHitstun: 320,
+    lowDamage: 10,
+    lowKnockback: 300,
+    meterGain: 130
+  },
+  // Grappler: sturdy, weak jab but a crushing sweep with long stun; weak special.
   [JIUJITSU_FIGHTER_CHARACTER_ID]: {
     maxHealth: 110,
+    defense: 10,
     highDamage: 6,
     lowDamage: 14,
     lowKnockback: 380,
-    lowHitstun: 480,
+    lowHitstun: 520,
     specialDamage: 5,
-    specialHitstun: 220
+    specialHitstun: 220,
+    meterGain: 110
   },
-  // Tanky, with a hard-hitting heavy chop and a three-hit special.
+  // Juggernaut: the most health and armour, axe blows chip through guards; slow meter.
   [VIKING_BERSERKER_CHARACTER_ID]: {
-    maxHealth: 115,
+    maxHealth: 120,
+    defense: 15,
     highDamage: 8,
-    lowDamage: 14,
-    lowKnockback: 380,
+    lowDamage: 15,
+    lowKnockback: 400,
     specialDamage: 8,
-    specialKnockback: 190
+    specialKnockback: 190,
+    guardBreak: 25,
+    meterGain: 80
   },
-  // Fragile but quick: less health and lighter hits than the default, a fast three-hit special.
+  // Speedster: fragile with light hits, but the fastest meter and a strong special.
   [KUNOICHI_CHARACTER_ID]: {
-    maxHealth: 90,
+    maxHealth: 85,
     highDamage: 6,
+    highHitstun: 300,
     lowDamage: 10,
-    specialDamage: 7
+    specialDamage: 9,
+    meterGain: 125
   },
-  // Hard hitter at close range: strong elbows and low kicks to make up for the short reach.
+  // Pressure: the hardest normal hits in the roster, and they wear guards down.
   [MUAY_THAI_CHARACTER_ID]: {
     highDamage: 8,
-    lowDamage: 13,
+    lowDamage: 14,
     lowKnockback: 360,
-    specialDamage: 8
+    specialDamage: 8,
+    guardBreak: 20
   },
-  // Balanced, with a strong three-hit fire-palm special.
+  // Iron wall: light hits, but takes the least damage (and the Golden Bell blocks all chip).
   [SHAOLIN_MONK_CHARACTER_ID]: {
+    defense: 20,
+    lowDamage: 11,
     specialDamage: 8,
     specialKnockback: 180
+  },
+  // Final boss: strong at everything, the heaviest special finisher in the game.
+  [HAC_LONG_CHARACTER_ID]: {
+    maxHealth: 110,
+    defense: 10,
+    highDamage: 8,
+    lowDamage: 13,
+    specialDamage: 10,
+    specialKnockback: 220,
+    guardBreak: 15,
+    meterGain: 90
+  },
+  // Duelist: sharp sword hits that nick through guards, but fragile.
+  [WUDANG_SWORDSWOMAN_CHARACTER_ID]: {
+    maxHealth: 90,
+    highDamage: 9,
+    lowDamage: 11,
+    specialDamage: 8,
+    guardBreak: 10,
+    meterGain: 115
+  },
+  // Trickster: weak pokes, but the meter fills fastest of all for frequent specials.
+  [MONKEY_KING_CHARACTER_ID]: {
+    maxHealth: 95,
+    defense: 5,
+    highDamage: 6,
+    lowDamage: 11,
+    specialDamage: 8,
+    meterGain: 150
+  },
+  // Berserker: the biggest blade hits in the game and two flying blade-qi crescents (13 each),
+  // but the lowest health and no armour.
+  [ASURA_BLADE_CHARACTER_ID]: {
+    maxHealth: 85,
+    highDamage: 9,
+    lowDamage: 15,
+    lowKnockback: 380,
+    specialDamage: 13,
+    specialKnockback: 220,
+    guardBreak: 10
   }
 };
 
@@ -154,7 +231,10 @@ export const FIGHTER_COMBAT_FIELDS: FighterCombatField[] = [
   { id: 'lowHitstun', label: 'Low stun', min: 0, max: 1200, step: 20 },
   { id: 'specialDamage', label: 'Special dmg', min: 1, max: 50, step: 1 },
   { id: 'specialKnockback', label: 'Special kb', min: 0, max: 800, step: 10 },
-  { id: 'specialHitstun', label: 'Special stun', min: 0, max: 1200, step: 20 }
+  { id: 'specialHitstun', label: 'Special stun', min: 0, max: 1200, step: 20 },
+  { id: 'defense', label: 'Defense %', min: 0, max: 60, step: 1 },
+  { id: 'guardBreak', label: 'Chip %', min: 0, max: 100, step: 1 },
+  { id: 'meterGain', label: 'Meter gain %', min: 25, max: 300, step: 5 }
 ];
 
 /**
@@ -268,7 +348,8 @@ export function getAttackProfile(combat: FighterCombat, kind: AttackKind): Attac
       height: 'high',
       damage: combat.highDamage,
       knockback: combat.highKnockback,
-      hitstun: combat.highHitstun
+      hitstun: combat.highHitstun,
+      guardBreak: combat.guardBreak
     };
   }
 
@@ -278,7 +359,8 @@ export function getAttackProfile(combat: FighterCombat, kind: AttackKind): Attac
       height: 'high',
       damage: combat.specialDamage,
       knockback: combat.specialKnockback,
-      hitstun: combat.specialHitstun
+      hitstun: combat.specialHitstun,
+      guardBreak: combat.guardBreak
     };
   }
 
@@ -287,7 +369,8 @@ export function getAttackProfile(combat: FighterCombat, kind: AttackKind): Attac
     height: 'low',
     damage: combat.lowDamage,
     knockback: combat.lowKnockback,
-    hitstun: combat.lowHitstun
+    hitstun: combat.lowHitstun,
+    guardBreak: combat.guardBreak
   };
 }
 

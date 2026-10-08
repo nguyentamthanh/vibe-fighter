@@ -1,0 +1,6 @@
+NO attachment - this prompt creates the reference itself.
+SAVE the result as: concepts/characters/2026-10-07-wudang-swordswoman/wudang-swordswoman-ref.png
+Check it before generating any action: every other prompt copies this design.
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Create a clean full-body reference image for an original SNES-era pixel-art fighting-game sprite character: a graceful young Wudang swordswoman: long black hair in a high bun held by a jade hairpin with a few loose strands, a calm determined face, a white and pale-blue Taoist robe with wide flowing sleeves and a blue sash belt, white trousers, black cloth shoes, holding a straight double-edged jian sword with a silver blade and a long blue tassel on the hilt. Isolated full-body, 3/4 side view facing LEFT in a ready fighting stance, centred with generous padding, plain white background, no stage, no HUD, no opponent. Original character only, no logos, no text, no watermark.

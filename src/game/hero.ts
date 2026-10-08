@@ -7,6 +7,10 @@ import { VIKING_BERSERKER_CHARACTER } from './vikingBerserker';
 import { KUNOICHI_CHARACTER } from './kunoichi';
 import { MUAY_THAI_CHARACTER } from './muayThai';
 import { SHAOLIN_MONK_CHARACTER } from './shaolinMonk';
+import { HAC_LONG_CHARACTER } from './hacLong';
+import { WUDANG_SWORDSWOMAN_CHARACTER } from './wudangSwordswoman';
+import { MONKEY_KING_CHARACTER } from './monkeyKing';
+import { ASURA_BLADE_CHARACTER } from './asuraBlade';
 
 export interface HeroBoundsFrame {
   frame: number;
@@ -54,7 +58,11 @@ export const CHARACTER_DEFINITIONS: CharacterDefinition[] = [
   VIKING_BERSERKER_CHARACTER,
   KUNOICHI_CHARACTER,
   MUAY_THAI_CHARACTER,
-  SHAOLIN_MONK_CHARACTER
+  SHAOLIN_MONK_CHARACTER,
+  HAC_LONG_CHARACTER,
+  WUDANG_SWORDSWOMAN_CHARACTER,
+  MONKEY_KING_CHARACTER,
+  ASURA_BLADE_CHARACTER
 ];
 
 /**

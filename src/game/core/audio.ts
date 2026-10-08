@@ -208,6 +208,86 @@ export function playBellStrike(settings: GameSettings, fundamental = 196, audioC
   });
 }
 
+/** Short synthesized arcade stings for the match announcer. */
+export type ArcadeSting = 'round' | 'fight' | 'ko' | 'victory';
+
+/**
+ * Plays a synthesized arcade sting (no audio files needed): a gong for the
+ * round call, a rising chord for FIGHT!, a deep boom with a noise crash for a
+ * K.O., and a short major fanfare for the results screen. Respects mute and
+ * the SFX volume.
+ * @param settings - Current audio settings.
+ * @param sting - Which sting to play.
+ * @param audioCtx - Audio context to play on (defaults to the shared one).
+ */
+export function playArcadeSting(settings: GameSettings, sting: ArcadeSting, audioCtx?: AudioContext): void {
+  const volume = getEffectiveVolume(0.3, 'sfx', settings);
+
+  if (volume <= 0) {
+    return;
+  }
+
+  const ctx = audioCtx ?? getAudioContext();
+  if (ctx.state === 'suspended') {
+    void ctx.resume();
+  }
+
+  const now = ctx.currentTime;
+  const master = ctx.createGain();
+  master.gain.setValueAtTime(volume, now);
+  master.connect(ctx.destination);
+
+  const tone = (type: OscillatorType, from: number, to: number, start: number, length: number, level: number): void => {
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(from, now + start);
+    oscillator.frequency.exponentialRampToValueAtTime(to, now + start + length);
+    gain.gain.setValueAtTime(0.0001, now + start);
+    gain.gain.exponentialRampToValueAtTime(level, now + start + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + start + length);
+    oscillator.connect(gain);
+    gain.connect(master);
+    oscillator.start(now + start);
+    oscillator.stop(now + start + length + 0.05);
+  };
+
+  const noise = (start: number, length: number, level: number): void => {
+    const buffer = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * length), ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      data[i] = (Math.random() * 2 - 1) * (1 - i / data.length) ** 2;
+    }
+    const source = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    source.buffer = buffer;
+    gain.gain.setValueAtTime(level, now + start);
+    source.connect(gain);
+    gain.connect(master);
+    source.start(now + start);
+  };
+
+  switch (sting) {
+    case 'round':
+      BELL_PARTIALS.forEach(([ratio, level, decay]) => tone('sine', 110 * ratio, 108 * ratio, 0, decay, level * 0.8));
+      break;
+    case 'fight':
+      [262, 330, 392, 523].forEach((frequency, index) => tone('square', frequency, frequency, index * 0.05, 0.35, 0.18));
+      noise(0, 0.25, 0.25);
+      break;
+    case 'ko':
+      tone('sine', 140, 38, 0, 1.2, 1);
+      tone('triangle', 90, 30, 0, 0.9, 0.6);
+      noise(0, 0.7, 0.55);
+      break;
+    case 'victory':
+      [523, 659, 784, 1047].forEach((frequency, index) => tone('square', frequency, frequency, index * 0.12, 0.3, 0.14));
+      tone('square', 1047, 1047, 0.5, 0.8, 0.16);
+      tone('triangle', 262, 262, 0.5, 0.8, 0.22);
+      break;
+  }
+}
+
 function cue(
   key: string,
   category: AudioCategory,

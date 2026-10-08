@@ -1,0 +1,13 @@
+ATTACH the reference image: concepts/characters/2026-10-07-monkey-king/monkey-king-ref.png
+SAVE the result as: concepts/characters/2026-10-07-monkey-king/raw/block-high.png
+6 frames, 3x2 grid, 10 fps
+
+----- COPY EVERYTHING BELOW THIS LINE INTO GEMINI -----
+Using the attached character reference exactly (same design, colours, proportions and SNES-era pixel-art fighting-game sprite look: an agile monkey-style kung-fu fighter inspired by the Monkey King of Journey to the West: a cheeky monkey-like face with golden-tan fur on the face and arms, a thin gold circlet on the head, a red and gold armoured vest, a tiger-skin kilt over yellow trousers, black boots, holding a long red staff with gold bands at both ends), draw a sprite sheet of the "Block High" animation for a 2D fighting game: 6 frames in a 3x2 grid (3 columns, 2 rows), read left-to-right then top-to-bottom. Every frame has the same size, the same character scale and the same ground line, and the character faces RIGHT in a 3/4 side view. Feet stay planted. The block pose is held from frame 3 onward.
+Frame 1: guard stance, starting to raise the guard.
+Frame 2: the staff held vertically in front of the face.
+Frame 3: block held: the staff held vertically in front of the face and chest, body braced.
+Frame 4: block held (same).
+Frame 5: block held (same).
+Frame 6: block held (same).
+Draw the character small inside its cell: including the the long staff, it takes at most 60 percent of the cell width and 80 percent of the cell height, centred, with plenty of empty background around it. No part of the character, the long staff may cross into a neighbouring cell or touch the image edge. Draw only this one character, no opponent. Flat solid magenta (#ff00ff) background, no shadow, no text, no numbers, no grid lines, no logo, no watermark.
